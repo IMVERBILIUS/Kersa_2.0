@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('article_id')->constrained()->onDelete('cascade'); // relasi ke artikel
             $table->string('title'); // judul subheading
-            $table->integer('order_number'); // urutan subheading
+            $table->integer('order_number')->default(1);// urutan subheading
             $table->timestamps();
         });
     }

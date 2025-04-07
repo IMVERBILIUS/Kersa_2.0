@@ -1,89 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-        }
+@extends('layouts.admin')
 
-        .sidebar {
-            height: 100vh;
-            background-color: #343a40;
-            color: white;
-            padding-top: 20px;
-        }
+@section('content')
+    <h2>Dashboard</h2>
+    <p>Welcome, {{ Auth::user()->name }}!</p>
 
-        .sidebar a {
-            color: white;
-            display: block;
-            padding: 10px 20px;
-            text-decoration: none;
-        }
+    <h4>All Articles</h4>
 
-        .sidebar a:hover {
-            background-color: #495057;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .card {
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
-<body>
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3 sidebar">
-            <h4 class="text-center">Admin Panel</h4>
-            <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-            <a href="#">Manage</a>
-            <form action="{{ route('logout') }}" method="POST" class="mt-3 px-3">
-                @csrf
-                <button class="btn btn-sm btn-danger w-100">Logout</button>
-            </form>
-        </div>
-
-        <!-- Main Content -->
-        <div class="col-md-9 content">
-            <h2>Dashboard</h2>
-            <p>Welcome, {{ Auth::user()->name }}!</p>
-
-            <h4>All Articles</h4>
-
-            <!-- Dummy Articles -->
-            <div class="card">
+    @if($articles->count())
+        @foreach($articles as $article)
+            <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">How Laravel Works</h5>
-                    <p class="card-text">An introductory article explaining the Laravel framework basics.</p>
-                    <span class="badge bg-info">Author: John Doe</span>
+                    <h5 class="card-title">{{ $article->title }}</h5>
+                    <p class="card-text">{{ Str::limit($article->description, 150) }}</p>
+                    <span class="badge bg-info">Status: {{ $article->status }}</span>
+                    <span class="badge bg-secondary">Views: {{ $article->views }}</span>
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">PHP 8 New Features</h5>
-                    <p class="card-text">A quick overview of new features in PHP 8 and how they improve development.</p>
-                    <span class="badge bg-info">Author: Jane Smith</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Building REST APIs</h5>
-                    <p class="card-text">Learn how to build RESTful APIs using Laravel in simple steps.</p>
-                    <span class="badge bg-info">Author: Admin</span>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-</body>
-</html>
+        @endforeach
+    @else
+        <p>No articles found.</p>
+    @endif
+@endsection
