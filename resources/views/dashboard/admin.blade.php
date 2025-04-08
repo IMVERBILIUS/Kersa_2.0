@@ -14,6 +14,10 @@
                     <p class="card-text">{{ Str::limit($article->description, 150) }}</p>
                     <span class="badge bg-info">Status: {{ $article->status }}</span>
                     <span class="badge bg-secondary">Views: {{ $article->views }}</span>
+
+                    <div class="mt-3">
+                        <a href="{{ route('articles.show', $article->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                    </div>
                 </div>
             </div>
         @endforeach

@@ -12,6 +12,7 @@ class Paragraph extends Model
 
     public function subheading()
     {
-        return $this->belongsTo(Subheading::class, 'subheading_id');
+        return $this->belongsTo(Subheading::class, 'subheading_id', 'id');
+
     }
 }

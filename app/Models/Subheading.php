@@ -13,11 +13,11 @@ class Subheading extends Model
 
     public function article()
     {
-        return $this->belongsTo(Article::class, 'article_id');
+        return $this->belongsTo(Article::class, 'article_id', 'id');
     }
 
     public function paragraphs()
     {
-        return $this->hasMany(Paragraph::class, 'subheading_id');
+        return $this->hasMany(Paragraph::class, 'subheading_id', 'id');
     }
 }

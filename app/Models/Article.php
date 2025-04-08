@@ -8,13 +8,13 @@ class Article extends Model
 
 
     protected $fillable = [
-        'title', 'description', 'thumbnail', 'status', 'views', 'user_id'
+        'title', 'description', 'thumbnail', 'status', 'views', 'user_id','author',
     ];
 
 
     public function subheadings()
 {
-    return $this->hasMany(Subheading::class, 'article_id', 'article_id');
+    return $this->hasMany(Subheading::class, 'article_id', 'id');
 }
 
 }

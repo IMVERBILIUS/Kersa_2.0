@@ -35,6 +35,7 @@ class ArticleController extends Controller
             'subheadings.*.title' => 'required|string|max:255',
             'subheadings.*.paragraphs' => 'required|array',
             'subheadings.*.paragraphs.*.content' => 'required|string',
+            'author' => 'required|string|max:255',
         ]);
 
         // Handle thumbnail
@@ -50,6 +51,7 @@ class ArticleController extends Controller
         $article->thumbnail = $thumbnailPath;
         $article->status = $request->status;
         $article->user_id = auth()->id(); // pastikan kolom ini ada
+        $article->author = $request->author;
         $article->save();
 
         // Simpan subheadings dan paragraphs
@@ -76,14 +78,14 @@ class ArticleController extends Controller
 
 
 
-    // Tampilkan form edit artikel
     public function edit($id)
     {
-        $article = Article::findOrFail($id);
+        // Load article beserta subheadings dan paragraphs
+        $article = Article::with('subheadings.paragraphs')->findOrFail($id);
+
         return view('articles.edit', compact('article'));
     }
 
-    // Update artikel
     public function update(Request $request, $id)
     {
         $article = Article::findOrFail($id);
@@ -91,22 +93,78 @@ class ArticleController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
+            'author' => 'required|string|max:255',
             'thumbnail'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'status'      => 'required|in:Draft,Published',
         ]);
 
+        // Jika user upload thumbnail baru
         if ($request->hasFile('thumbnail')) {
             $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
             $article->thumbnail = $thumbnailPath;
         }
 
-        $article->title       = $request->title;
+        // Update field utama
+        $article->title = $request->title;
         $article->description = $request->description;
-        $article->status      = $request->status;
+        $article->status = $request->status;
+        $article->author = $request->author;
         $article->save();
+
+        // Update atau Tambah Subheadings dan Paragraphs
+        if ($request->has('subheadings')) {
+            foreach ($request->subheadings as $subIndex => $subheadingData) {
+                if (isset($subheadingData['id'])) {
+                    // Update subheading lama
+                    $subheading = \App\Models\Subheading::find($subheadingData['id']);
+                    $subheading->title = $subheadingData['title'];
+                    $subheading->save();
+                } else {
+                    // Tambah subheading baru
+                    $subheading = \App\Models\Subheading::create([
+                        'article_id' => $article->id,
+                        'title' => $subheadingData['title'],
+                    ]);
+                }
+
+                // Cek paragraphs
+                if (isset($subheadingData['paragraphs'])) {
+                    foreach ($subheadingData['paragraphs'] as $paraIndex => $paragraphData) {
+                        if (isset($paragraphData['id'])) {
+                            // Update paragraph lama
+                            $paragraph = \App\Models\Paragraph::find($paragraphData['id']);
+                            $paragraph->content = $paragraphData['content'];
+                            $paragraph->save();
+                        } else {
+                            // Tambah paragraph baru
+                            \App\Models\Paragraph::create([
+                                'subheading_id' => $subheading->id,
+                                'content' => $paragraphData['content'],
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
 
         return redirect()->route('admin.articles.manage')->with('success', 'Article updated successfully.');
     }
+
+    public function approval()
+    {
+        $draftArticles = Article::where('status', 'draft')->get();
+        return view('articles.approval', compact('draftArticles'));
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $article = Article::findOrFail($id);
+        $article->status = 'published';
+        $article->save();
+
+        return redirect()->route('articles.approval')->with('success', 'Status updated to published.');
+    }
+
 
     // Hapus artikel
     public function destroy($id)
@@ -128,7 +186,11 @@ class ArticleController extends Controller
 
         return redirect()->route('admin.articles.manage')->with('success', 'Article deleted successfully.');
     }
-
+    public function show($id)
+    {
+        $article = Article::with('subheadings.paragraphs')->findOrFail($id);
+        return view('articles.show', compact('article'));
+    }
 
 
 

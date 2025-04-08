@@ -13,6 +13,12 @@
             <input type="text" class="form-control" name="title" required>
         </div>
 
+        {{-- Description --}}
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="description" rows="3"></textarea>
+        </div>
+
         {{-- Thumbnail --}}
         <div class="mb-3">
             <label class="form-label">Thumbnail</label>
@@ -26,6 +32,12 @@
                 <option value="Draft">Draft</option>
                 <option value="Published">Published</option>
             </select>
+        </div>
+
+        {{-- Author --}}
+        <div class="mb-3">
+            <label class="form-label">Author</label>
+            <input type="text" class="form-control" name="author" required>
         </div>
 
         {{-- Dynamic Subheadings and Paragraphs --}}
