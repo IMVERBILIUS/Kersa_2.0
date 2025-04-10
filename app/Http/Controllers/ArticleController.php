@@ -7,6 +7,8 @@ use App\Models\Article;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Subheading;
 use App\Models\Paragraph;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -23,7 +25,6 @@ class ArticleController extends Controller
         return view('articles.create');
     }
 
-    // Simpan artikel baru
     public function store(Request $request)
     {
         $request->validate([
@@ -38,34 +39,41 @@ class ArticleController extends Controller
             'author' => 'required|string|max:255',
         ]);
 
-        // Handle thumbnail
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
+            $image = $request->file('thumbnail');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            // Resize & compress
+            $resizedImage = Image::make($image)
+                ->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->encode($image->getClientOriginalExtension(), 75);
+
+            \Storage::disk('public')->put('thumbnails/' . $imageName, $resizedImage);
+            $thumbnailPath = 'thumbnails/' . $imageName;
         }
 
-        // Simpan artikel
-        $article = new \App\Models\Article();
+        $article = new Article();
         $article->title = $request->title;
         $article->description = $request->description;
         $article->thumbnail = $thumbnailPath;
         $article->status = $request->status;
-        $article->user_id = auth()->id(); // pastikan kolom ini ada
+        $article->user_id = auth()->id();
         $article->author = $request->author;
         $article->save();
 
-        // Simpan subheadings dan paragraphs
         foreach ($request->subheadings as $subIndex => $subheading) {
-            $savedSub = new \App\Models\Subheading();
+            $savedSub = new Subheading();
             $savedSub->article_id = $article->id;
             $savedSub->title = $subheading['title'];
             $savedSub->order_number = $subIndex + 1;
             $savedSub->save();
 
-            // Simpan paragraf untuk setiap subheading
             foreach ($subheading['paragraphs'] as $paraIndex => $paragraph) {
-                $newParagraph = new \App\Models\Paragraph();
-                $newParagraph->subheading_id = $savedSub->id; // gunakan PK yg benar
+                $newParagraph = new Paragraph();
+                $newParagraph->subheading_id = $savedSub->id;
                 $newParagraph->content = $paragraph['content'];
                 $newParagraph->order_number = $paraIndex + 1;
                 $newParagraph->save();
@@ -74,7 +82,6 @@ class ArticleController extends Controller
 
         return redirect()->route('admin.articles.manage')->with('success', 'Article created with subheadings and paragraphs.');
     }
-
 
 
 
@@ -87,68 +94,70 @@ class ArticleController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $article = Article::findOrFail($id);
+{
+    $article = Article::findOrFail($id);
 
-        $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'author' => 'required|string|max:255',
-            'thumbnail'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'status'      => 'required|in:Draft,Published',
-        ]);
+    $request->validate([
+        'title'       => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'author'      => 'required|string|max:255',
+        'thumbnail'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'status'      => 'required|in:Draft,Published',
+    ]);
 
-        // Jika user upload thumbnail baru
-        if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
-            $article->thumbnail = $thumbnailPath;
-        }
+    if ($request->hasFile('thumbnail')) {
+        $image = $request->file('thumbnail');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
 
-        // Update field utama
-        $article->title = $request->title;
-        $article->description = $request->description;
-        $article->status = $request->status;
-        $article->author = $request->author;
-        $article->save();
+        // Resize & compress
+        $resizedImage = Image::make($image)
+            ->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->encode($image->getClientOriginalExtension(), 75);
 
-        // Update atau Tambah Subheadings dan Paragraphs
-        if ($request->has('subheadings')) {
-            foreach ($request->subheadings as $subIndex => $subheadingData) {
-                if (isset($subheadingData['id'])) {
-                    // Update subheading lama
-                    $subheading = \App\Models\Subheading::find($subheadingData['id']);
-                    $subheading->title = $subheadingData['title'];
-                    $subheading->save();
-                } else {
-                    // Tambah subheading baru
-                    $subheading = \App\Models\Subheading::create([
-                        'article_id' => $article->id,
-                        'title' => $subheadingData['title'],
-                    ]);
-                }
+        \Storage::disk('public')->put('thumbnails/' . $imageName, $resizedImage);
+        $article->thumbnail = 'thumbnails/' . $imageName;
+    }
 
-                // Cek paragraphs
-                if (isset($subheadingData['paragraphs'])) {
-                    foreach ($subheadingData['paragraphs'] as $paraIndex => $paragraphData) {
-                        if (isset($paragraphData['id'])) {
-                            // Update paragraph lama
-                            $paragraph = \App\Models\Paragraph::find($paragraphData['id']);
-                            $paragraph->content = $paragraphData['content'];
-                            $paragraph->save();
-                        } else {
-                            // Tambah paragraph baru
-                            \App\Models\Paragraph::create([
-                                'subheading_id' => $subheading->id,
-                                'content' => $paragraphData['content'],
-                            ]);
-                        }
+    $article->title = $request->title;
+    $article->description = $request->description;
+    $article->status = $request->status;
+    $article->author = $request->author;
+    $article->save();
+
+    if ($request->has('subheadings')) {
+        foreach ($request->subheadings as $subIndex => $subheadingData) {
+            if (isset($subheadingData['id'])) {
+                $subheading = Subheading::find($subheadingData['id']);
+                $subheading->title = $subheadingData['title'];
+                $subheading->save();
+            } else {
+                $subheading = Subheading::create([
+                    'article_id' => $article->id,
+                    'title' => $subheadingData['title'],
+                ]);
+            }
+
+            if (isset($subheadingData['paragraphs'])) {
+                foreach ($subheadingData['paragraphs'] as $paraIndex => $paragraphData) {
+                    if (isset($paragraphData['id'])) {
+                        $paragraph = Paragraph::find($paragraphData['id']);
+                        $paragraph->content = $paragraphData['content'];
+                        $paragraph->save();
+                    } else {
+                        Paragraph::create([
+                            'subheading_id' => $subheading->id,
+                            'content' => $paragraphData['content'],
+                        ]);
                     }
                 }
             }
         }
-
-        return redirect()->route('admin.articles.manage')->with('success', 'Article updated successfully.');
     }
+
+    return redirect()->route('admin.articles.manage')->with('success', 'Article updated successfully.');
+}
 
     public function approval()
     {
