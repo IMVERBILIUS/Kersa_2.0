@@ -10,7 +10,7 @@
                 <div class="d-flex align-items-center">
                     <div class="d-flex justify-content-center align-items-center rounded-circle me-4" 
                          style="width: 70px; height: 70px; background-color: #e6f7f1;">
-                        <i class="fas fa-newspaper fs-2" style="color: #36b37e;"></i>
+                        <i class="fas fa-file-alt fs-2" style="color: #36b37e;"></i>
                     </div>
                     <div>
                         <h2 class="fs-3 fw-bold mb-1 ">Manage Article</h2>
@@ -70,7 +70,8 @@
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td class="py-3">
                                     @if($article->thumbnail)
-                                        <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="thumbnail" class="rounded-3 object-fit-cover" style="width: 200px; height: 100px;">
+                                      <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="thumbnail" class="rounded-3 object-fit-cover" style="width: 200px; height: 100px;">
+
                                     @else
                                         <div class="bg-light rounded-3 d-flex justify-content-center align-items-center" style="width: 104px; height: 72px;">
                                             <span class="text-muted small">No Image</span>

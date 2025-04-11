@@ -17,7 +17,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 25%;
+            width: 20%;
             height: 100vh;
             background-color: white;
             box-shadow: 0 1px 10px rgba(100, 100, 100, 0.05);
@@ -73,8 +73,8 @@
         }
 
         .main-content {
-            margin-left: 25%;
-            width: 75%;
+            margin-left: 20%;
+            width: 80%;
         }
 
         .content {
