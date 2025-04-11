@@ -21,4 +21,8 @@ class FrontController extends Controller
         $articles = Article::orderBy('created_at', 'desc')->get();
         return view('front.articles', compact('articles'));
     }
+
+    public function contact(){
+        return view('front.contact');
+    }
 }

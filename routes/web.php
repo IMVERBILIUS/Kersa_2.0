@@ -8,6 +8,7 @@ use App\Models\Article;
 
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
 Route::get('/articles', [FrontController::class, 'articles'])->name('front.articles');
+Route::get('/contact', [FrontController::class, 'contact'])->name('front.contact');
 
 // Public Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

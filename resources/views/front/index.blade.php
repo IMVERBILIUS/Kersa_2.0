@@ -6,8 +6,8 @@
    <nav class="navbar navbar-expand-lg bg-transparent py-2  position-absolute top-0 start-0 w-100 z-3">
       <div class="container">
          <div class="navbar-brand d-flex flex-column align-items-start">
-            <h1 class="mb-0 fs-3 fw-semibold text-white">KERSA</h1>
-            <p class=" fs-6 mb-0 text-white">By Ankara Cipta</p>
+            <h1 class="mb-0 fs-3 fw-semibold text-white ">KERSA</h1>
+            <p class=" fs-6 mb-0 text-white ">By Ankara Cipta</p>
          </div>
          
          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
@@ -17,16 +17,16 @@
          <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav ms-auto">
                <li class="nav-item">
-                  <a class="nav-link active fw-medium text-white" href="#">Beranda</a>
+                  <a class="nav-link active fw-medium text-white active" href="#">Home</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link fw-medium text-white" href="#">Tentang Kami</a>
+                  <a class="nav-link fw-medium text-white" href="#">About Us</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link fw-medium text-white" href="article.html">Artikel</a>
+                  <a class="nav-link fw-medium text-white" href="{{route('front.articles')}}">Articles</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link fw-medium text-white" href="contact.html">Kontak</a>
+                  <a class="nav-link fw-medium text-white" href="{{route('front.contact')}}">Contact</a>
                </li>
             </ul>
          </div>
@@ -44,7 +44,7 @@
       <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50 z-2"></div>
 
       <!-- Hero Content -->
-      <div class="container position-relative text-white z-3">
+      <div class="container position-relative text-white z-3 ">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-10">
             <div class="p-4 p-md-5 text-center">
@@ -81,8 +81,9 @@
       </div>
     
       {{-- Overlay untuk hover --}}
-      <div class="overlay d-flex justify-content-center align-items-center text-center px-3">
-        <h5 class="text-white fw-semibold">{{ $article->title }}</h5>
+      <div class="overlay d-flex flex-column justify-content-center align-items-center text-center px-3">
+        <h5 class="text-white fs-5 fw-semibold">{{ $article->title }}</h5>
+        <p class="text-white fs-7 clamp-text">{{ $article->description }}</p>
       </div>
     
      
@@ -108,7 +109,10 @@
   <!-- Carousel End -->
 
   <div class="text-center mt-4">
-    <a href="{{route('front.articles')}}" class="btn btn-warning px-4 py-2 fw-medium">See All Articles</a>
+   <a href="{{ route('front.articles') }}" class="btn btn-lg px-4 py-2  " style="border: 1px solid black;background-color: #F0F5FF; ; border-radius: 8px; ">
+                                    See all article
+                                   
+                                </a>
   </div>
 </div>
 
@@ -134,8 +138,8 @@
             <ul class="list-unstyled d-flex flex-column gap-2">
               <li><a href="#" class="text-decoration-none text-white">Beranda</a></li>
               <li><a href="#" class="text-decoration-none text-white">Tentang Kami</a></li>
-              <li><a href="article.html" class="text-decoration-none text-white">Artikel</a></li>
-              <li><a href="contact.html" class="text-decoration-none text-white">Kontak</a></li>
+              <li><a href="{{route('front.articles')}}" class="text-decoration-none text-white">Artikel</a></li>
+              <li><a href="{{route('front.contact')}}" class="text-decoration-none text-white">Kontak</a></li>
             </ul>
           </div>
 
@@ -182,6 +186,23 @@
 
 .card:hover .overlay {
   opacity: 1;
+}
+.card:hover{
+  scale: 1.05;
+  transition:  0.2s ease-in-out
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(108, 99, 255, 0.3);
+}
+
+.clamp-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Ganti sesuai kebutuhan */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
   

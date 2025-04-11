@@ -11,6 +11,6 @@
 </head>
 <body style="font-family: 'Poppins', sans-serif">
         @yield('content')
-
+        @stack('scripts')
 </body>
 </html>
