@@ -2,8 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Article;
+
+Route::get('/', [FrontController::class, 'index'])->name('front.index');
+Route::get('/articles', [FrontController::class, 'articles'])->name('front.articles');
 
 // Public Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
