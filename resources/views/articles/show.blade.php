@@ -7,7 +7,7 @@
 
             {{-- Back Button --}}
             <div class="d-flex justify-content-between mb-4">
-                <a href="{{ route('admin.articles.manage') }}" class="btn px-4 py-2" 
+                <a href="{{ route('admin.articles.manage') }}" class="btn px-4 py-2"
                    style="background-color: #F0F5FF; color: #5B93FF; border-radius: 8px;">
                     <i class="fas fa-arrow-left me-2"></i> Back
                 </a>
@@ -16,8 +16,8 @@
             <div class="card border-0 rounded-4 shadow-sm mb-4">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <span class="badge rounded-pill px-3 py-2" 
-                              style="background-color: {{ $article->status == 'Published' ? '#E6F7F1' : '#f5f5f5' }}; 
+                        <span class="badge rounded-pill px-3 py-2"
+                              style="background-color: {{ $article->status == 'Published' ? '#E6F7F1' : '#f5f5f5' }};
                                     color: {{ $article->status == 'Published' ? '#36b37e' : '#6c757d' }};">
                             {{ $article->status }}
                         </span>
@@ -25,11 +25,11 @@
                             <i class="far fa-calendar-alt me-1"></i> {{ $article->created_at->format('d M Y') }}
                         </div>
                     </div>
-                    
+
                     <h1 class="fw-bold mb-3">{{ $article->title }}</h1>
-                    
+
                     <div class="d-flex align-items-center mb-4">
-                        <div class="d-flex justify-content-center align-items-center rounded-circle me-3" 
+                        <div class="d-flex justify-content-center align-items-center rounded-circle me-3"
                              style="width: 40px; height: 40px; background-color: #F0F5FF;">
                             <i class="fas fa-user" style="color: #5B93FF;"></i>
                         </div>
@@ -39,15 +39,16 @@
                         </div>
                     </div>
                     
+
                     @if($article->thumbnail)
                         <div class="text-center my-4 rounded-3 overflow-hidden" style="box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
-                            <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="Thumbnail" 
+                            <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="Thumbnail"
                                  class="img-fluid w-100" style="max-height: 400px; object-fit: cover;">
                         </div>
                     @endif
                 </div>
             </div>
-            
+
             <!-- Article Content Card -->
             <div class="card border-0 rounded-4 shadow-sm mb-4">
                 <div class="card-body p-4">
@@ -57,7 +58,7 @@
                             <p class="lead mb-0" style="color: #5F738C;">{{ $article->description }}</p>
                         </div>
                     </div>
-                    
+
                     <!-- Main Content -->
                     @if($article->subheadings->count())
                         <div class="article-content">
@@ -77,8 +78,8 @@
                     @endif
                 </div>
             </div>
-            
-            
+
+
         </div>
     </div>
 </div>
@@ -87,16 +88,16 @@
     .article-content h3 {
         font-size: 1.5rem;
     }
-    
+
     .article-content p {
         font-size: 1.05rem;
     }
-    
+
     .lead {
         font-size: 1.15rem;
         font-weight: 400;
     }
-    
+
     @media (max-width: 768px) {
         .article-content h3 {
             font-size: 1.3rem;

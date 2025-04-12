@@ -15,10 +15,9 @@ class ArticleController extends Controller
     // Tampilkan semua artikel
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->get();
+        $articles = Article::orderBy('created_at', 'desc')->paginate(6); // Paginate with 6 articles per page
         return view('articles.manage', compact('articles'));
     }
-
     // Tampilkan form tambah artikel
     public function create()
     {
