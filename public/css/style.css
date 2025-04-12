@@ -1,0 +1,31 @@
+/* Wrapper utama untuk memastikan footer berada di bawah */
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Memastikan wrapper mengambil setidaknya 100% dari tinggi layar */
+}
+
+/* Konten bisa berkembang tapi tetap memberi ruang untuk footer */
+.content {
+    flex-grow: 1; /* Konten akan mengisi ruang yang tersisa */
+}
+
+/* Footer */
+footer {
+    background-color: #212529;
+    color: #fff;
+}
+
+footer a {
+    color: #ffc107;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer .btn-outline-light:hover {
+    background-color: #fff;
+    color: #000;
+}

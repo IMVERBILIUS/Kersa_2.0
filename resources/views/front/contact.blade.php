@@ -4,7 +4,7 @@
 <section class="py-5">
     <div class="container">
        <div class="d-flex justify-content-between ">
-                <a href="{{ route('front.index') }}" class="btn px-4 py-2" 
+                <a href="{{ route('front.index') }}" class="btn px-4 py-2"
                    style="background-color: #F0F5FF; ; border-radius: 8px;">
                     <i class="fas fa-arrow-left me-2"></i> Back
                 </a>
@@ -64,7 +64,7 @@
                 <!-- Office Locations -->
                 <div class="p-4 p-lg-4 rounded-4 mb-4" style="background-color: #ffffff; box-shadow: 0 10px 30px rgba(108, 99, 255, 0.08);">
                     <h4 class="fw-semibold mb-4 text-dark" >Our Locations</h4>
-                    
+
                     <div class="d-flex mb-4 align-items-start">
                         <div class="me-3">
                             <div class="rounded-circle d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #eae7ff 0%, #f0f8ff 100%); width: 50px; height: 50px;">
@@ -79,7 +79,7 @@
                             <p class="mb-1 text-muted">Jl. Sadar Dusun I Kampung Padang,<br>Riau - 28557</p>
                         </div>
                     </div>
-                    
+
                     <div class="d-flex mb-4 align-items-start">
                         <div class="me-3">
                             <div class="rounded-circle d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #eae7ff 0%, #f0f8ff 100%); width: 50px; height: 50px;">
@@ -93,7 +93,7 @@
                             <p class="mb-1 text-muted">Ngadiwinatan NG I/1106 Yogyakarta,<br>DIY 55261</p>
                         </div>
                     </div>
-                    
+
                     <div class="d-flex align-items-start">
                         <div class="me-3">
                             <div class="rounded-circle d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #eae7ff 0%, #f0f8ff 100%); width: 50px; height: 50px;">
@@ -152,49 +152,7 @@
     </div>
 </section>
 
-<!-- Modern Footer -->
-<footer class="bg-dark p-3 text-white text-center py-5 mt-4">
-      <div class="container">
-        <div class="row">
-          <!-- Logo dan Hak Cipta -->
-          <div class="col-md-4 mb-4 text-md-start">
-            <h4 class="fw-bold mb-1">KERSA</h4>
-            <p class="small mb-3">By Ankara Cipta</p>
-            <p>&copy; 2025 Kersa by Ankara Cipta</p>
-            <p class="small text-muted">Sahabat solusi properti impian</p>
-          </div>
 
-          <!-- Navigasi -->
-          <div class="col-md-4 mb-4">
-            <h5 class="fw-bold mb-3">Links</h5>
-            <ul class="list-unstyled d-flex flex-column gap-2">
-              <li><a href="#" class="text-decoration-none text-white">Beranda</a></li>
-              <li><a href="#" class="text-decoration-none text-white">Tentang Kami</a></li>
-              <li><a href="{{route('front.articles')}}" class="text-decoration-none text-white">Artikel</a></li>
-              <li><a href="{{route('front.contact')}}" class="text-decoration-none text-white">Kontak</a></li>
-            </ul>
-          </div>
-
-          <!-- Kontak -->
-          <div class="col-md-4 mb-3 text-md-end">
-            <h5 class="fw-bold mb-3">Kontak Kami</h5>
-            <p>Email: <a href="mailto:kersa.id@gmail.com" class="text-warning text-decoration-none">kersa.id@gmail.com</a></p>
-            <p>Telepon: <a href="tel:+620812345678" class="text-warning text-decoration-none">+62 822-2095-5595</a></p>
-            <div class="d-flex justify-content-center justify-content-md-end gap-3 mt-4">
-              <a href="#" class="btn btn-outline-light btn-sm rounded-circle">
-                <i class="bi bi-facebook"></i>
-              </a>
-              <a href="#" class="btn btn-outline-light btn-sm rounded-circle">
-                <i class="bi bi-instagram"></i>
-              </a>
-              <a href="#" class="btn btn-outline-light btn-sm rounded-circle">
-                <i class="bi bi-twitter-x"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
 <style>
 /* Custom hover effects */
 .hover-link:hover {

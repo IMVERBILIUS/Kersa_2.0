@@ -127,32 +127,4 @@
     </div>
 </div>
 
-<!-- Footer -->
-<footer class="bg-dark text-white py-5">
-    <div class="container">
-        <div class="row text-center text-md-start">
-            <div class="col-md-4 mb-4">
-                <p class="mb-0">&copy; 2025 Kersa by Ankara Cipta</p>
-            </div>
-            <div class="col-md-4 mb-4">
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-white text-decoration-none">Beranda</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">Tentang Kami</a></li>
-                    <li><a href="{{ route('front.articles') }}" class="text-white text-decoration-none">Artikel</a></li>
-                    <li><a href="{{ route('front.contact') }}" class="text-white text-decoration-none">Kontak</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4 mb-4">
-                <h5>Kontak Kami</h5>
-                <p>Email: <a href="mailto:kersa.id@gmail.com" class="text-warning text-decoration-none">kersa.id@gmail.com</a></p>
-                <p>Telepon: <a href="tel:+6282220955595" class="text-warning text-decoration-none">+62 822-2095-5595</a></p>
-                <div class="d-flex justify-content-center gap-3 mt-3">
-                    <a href="#" class="text-white text-decoration-none">Facebook</a>
-                    <a href="#" class="text-white text-decoration-none">Instagram</a>
-                    <a href="#" class="text-white text-decoration-none">Twitter</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
 @endsection

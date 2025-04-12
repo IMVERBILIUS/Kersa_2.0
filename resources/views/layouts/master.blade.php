@@ -16,8 +16,8 @@
 
     {{-- Google Fonts (optional) --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-    {{-- Custom Global Styles (if needed) --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -29,13 +29,21 @@
 </head>
 <body style="font-family: 'Poppins', sans-serif">
 
-    {{-- Content Section --}}
-    @yield('content')
+    <!-- Wrapper for full height layout -->
+    <div class="main-wrapper d-flex flex-column min-vh-100">
 
-    {{-- Bootstrap JS Bundle --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        {{-- Content Section --}}
+        <div class="content flex-grow-1">
+            @yield('content')
+        </div>
+
+        {{-- Footer --}}
+        @include('layouts.footer')
+
+    </div>
 
     {{-- Additional Scripts --}}
     @stack('scripts')
+
 </body>
 </html>
