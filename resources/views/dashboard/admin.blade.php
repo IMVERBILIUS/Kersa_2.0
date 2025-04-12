@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="bg-white rounded-4 shadow-sm p-4">
                 <div class="d-flex align-items-center">
-                    <div class="d-flex justify-content-center align-items-center rounded-circle me-4" 
+                    <div class="d-flex justify-content-center align-items-center rounded-circle me-4"
                          style="width: 70px; height: 70px; background-color: #E9F5FF;">
                         <i class="fas fa-user-circle fs-2" style="color: #5B93FF;"></i>
                     </div>
@@ -88,12 +88,12 @@
                             @endif
                             <div class="card-body">
                                 <div class="d-flex justify-content-between mb-2">
-                                    <span class="badge rounded-pill px-3 py-2" 
-                                          style="background-color: {{ $article->status == 'Published' ? '#E6F7F1' : '#f5f5f5' }}; 
+                                    <span class="badge rounded-pill px-3 py-2"
+                                          style="background-color: {{ $article->status == 'Published' ? '#E6F7F1' : '#f5f5f5' }};
                                                 color: {{ $article->status == 'Published' ? '#36b37e' : '#6c757d' }};">
                                         {{ $article->status }}
                                     </span>
-                                    <span class="badge rounded-pill px-3 py-2" 
+                                    <span class="badge rounded-pill px-3 py-2"
                                           style="background-color: #F2F4F6; color: #5F738C;">
                                         <i class="fas fa-eye me-1"></i> {{ $article->views }}
                                     </span>
@@ -101,7 +101,7 @@
                                 <h5 class="card-title fw-semibold">{{ Str::limit($article->title, 50) }}</h5>
                                 <p class="card-text text-muted mb-3" style="height: 60px; overflow: hidden;">{{ Str::limit($article->description, 100) }}</p>
                                 <div class="d-grid">
-                                    <a href="{{ route('articles.show', $article->id) }}" class="btn btn-sm" style="background-color: #F0F5FF; color: #5B93FF; border-radius: 8px;">
+                                    <a href="{{ route('front.articles.show', $article->id) }}" class="btn btn-sm" style="background-color: #F0F5FF; color: #5B93FF; border-radius: 8px;">
                                         View Details <i class="fas fa-arrow-right ms-1"></i>
                                     </a>
                                 </div>

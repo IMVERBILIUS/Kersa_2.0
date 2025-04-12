@@ -11,6 +11,8 @@ Route::get('/', [FrontController::class, 'index'])->name('front.index');
 Route::get('/articles', [FrontController::class, 'articles'])->name('front.articles');
 Route::get('/articles/{id}', [FrontController::class, 'show'])->name('front.articles.show');
 Route::get('/contact', [FrontController::class, 'contact'])->name('front.contact');
+Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('front.articles.show');
+
 
 // ===== Auth Routes =====
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -38,7 +40,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/articles/edit/{id}', [ArticleController::class, 'edit'])->name('admin.articles.edit');
     Route::put('/admin/articles/update/{id}', [ArticleController::class, 'update'])->name('admin.articles.update');
     Route::delete('/admin/articles/delete/{id}', [ArticleController::class, 'destroy'])->name('admin.articles.delete');
-    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+    
 
     Route::get('/admin/articles/approval', [ArticleController::class, 'approval'])->name('articles.approval');
     Route::put('/admin/articles/update-status/{id}', [ArticleController::class, 'updateStatus'])->name('articles.updateStatus');

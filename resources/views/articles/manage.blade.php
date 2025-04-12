@@ -8,7 +8,7 @@
         <div class="col-12">
             <div class="bg-white rounded-4 shadow-sm p-4">
                 <div class="d-flex align-items-center">
-                    <div class="d-flex justify-content-center align-items-center rounded-circle me-4" 
+                    <div class="d-flex justify-content-center align-items-center rounded-circle me-4"
                          style="width: 70px; height: 70px; background-color: #e6f7f1;">
                         <i class="fas fa-file-alt fs-2" style="color: #36b37e;"></i>
                     </div>
@@ -21,12 +21,12 @@
         </div>
     </div>
 
-    
+
     <!-- Add Button -->
     <div class="row mb-4">
-       
+
         <div class="col-md-12 d-flex justify-content-end">
-            <a href="{{ route('admin.articles.create') }}" class="btn btn-success d-flex align-items-center px-3 py-2 rounded-3" 
+            <a href="{{ route('admin.articles.create') }}" class="btn btn-success d-flex align-items-center px-3 py-2 rounded-3"
                style="background-color: #36b37e; border: none;">
                 <i class="fas fa-plus me-2"></i>
                 <span class="fw-small ">Add New Article</span>
@@ -53,7 +53,7 @@
                     </select>
                 </div>
             </div>
-            
+
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead>
@@ -80,8 +80,8 @@
                                 </td>
                                 <td class="py-3">{{ $article->title }}</td>
                                 <td class="py-3">
-                                    <span class="badge rounded-pill px-3 py-2" 
-                                          style="background-color: {{ $article->status == 'Published' ? '#E6F7F1' : '#f5f5f5' }}; 
+                                    <span class="badge rounded-pill px-3 py-2"
+                                          style="background-color: {{ $article->status == 'Published' ? '#E6F7F1' : '#f5f5f5' }};
                                                  color: {{ $article->status == 'Published' ? '#36b37e' : '#6c757d' }};">
                                         {{ $article->status }}
                                     </span>
@@ -89,7 +89,7 @@
                                 <td class="py-3">{{ $article->views }}</td>
                                 <td class="py-3">
                                     <div class="d-flex gap-2">
-                                        <a href="{{ route('articles.show', $article->id) }}" class="btn btn-outline-dark btn-sm px-2 py-1" style="border-radius: 6px;">
+                                        <a href="{{ route('front.articles.show', $article->id) }}" class="btn btn-outline-dark btn-sm px-2 py-1" style="border-radius: 6px;">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a href="{{ route('admin.articles.edit', $article->id) }}" class="btn btn-outline-dark btn-sm px-2 py-1" style="border-radius: 6px;">
@@ -150,7 +150,7 @@
 <script>
 function confirmDelete(event, form) {
     event.preventDefault();
-    
+
     Swal.fire({
         title: "Yakin ingin menghapus?",
         text: "Data tidak bisa dikembalikan!",
