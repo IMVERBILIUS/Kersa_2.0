@@ -28,6 +28,7 @@
     @stack('styles')
 </head>
 <body style="font-family: 'Poppins', sans-serif">
+    
 
     <!-- Wrapper for full height layout -->
     <div class="main-wrapper d-flex flex-column min-vh-100">
