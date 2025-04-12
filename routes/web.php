@@ -38,6 +38,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/articles/edit/{id}', [ArticleController::class, 'edit'])->name('admin.articles.edit');
     Route::put('/admin/articles/update/{id}', [ArticleController::class, 'update'])->name('admin.articles.update');
     Route::delete('/admin/articles/delete/{id}', [ArticleController::class, 'destroy'])->name('admin.articles.delete');
+    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
 
     Route::get('/admin/articles/approval', [ArticleController::class, 'approval'])->name('articles.approval');
     Route::put('/admin/articles/update-status/{id}', [ArticleController::class, 'updateStatus'])->name('articles.updateStatus');
@@ -70,28 +71,3 @@ Route::fallback(function () {
     return view('errors.404');
 });
 // ===== Error Handling =====
-Route::get('/403', function () {
-    return view('errors.403');
-})->name('403');
-Route::get('/404', function () {
-    return view('errors.404');
-})->name('404');
-Route::get('/500', function () {
-    return view('errors.500');
-})->name('500');
-// ===== Maintenance Mode =====
-Route::get('/maintenance', function () {
-    return view('errors.maintenance');
-})->name('maintenance');
-// ===== Custom 404 Page =====
-Route::get('/custom-404', function () {
-    return view('errors.custom-404');
-})->name('custom-404');
-// ===== Custom 403 Page =====
-Route::get('/custom-403', function () {
-    return view('errors.custom-403');
-})->name('custom-403');
-// ===== Custom 500 Page =====
-Route::get('/custom-500', function () {
-    return view('errors.custom-500');
-})->name('custom-500');
