@@ -89,7 +89,7 @@
                                 <td class="py-3">{{ $article->views }}</td>
                                 <td class="py-3">
                                     <div class="d-flex gap-2">
-                                        <a href="{{ route('front.articles.show', $article->id) }}" class="btn btn-outline-dark btn-sm px-2 py-1" style="border-radius: 6px;">
+                                        <a href="{{ route('admin.articles.show', $article->id) }}" class="btn btn-outline-dark btn-sm px-2 py-1" style="border-radius: 6px;">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a href="{{ route('admin.articles.edit', $article->id) }}" class="btn btn-outline-dark btn-sm px-2 py-1" style="border-radius: 6px;">
