@@ -41,9 +41,9 @@
 
 
                     @if($article->thumbnail)
-                        <div class="text-center my-4 rounded-3 overflow-hidden" style="box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
+                        <div class="text-center my-4 rounded-3 overflow-hidden ">
                             <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="Thumbnail"
-                                 class="img-fluid w-100" style="max-height: 500px; object-fit: cover;">
+                                 class="w-75 rounded-3" style="max-height: 600px; object-fit: cover;">
                         </div>
                     @endif
                 </div>
