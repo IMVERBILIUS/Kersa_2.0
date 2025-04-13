@@ -33,6 +33,8 @@
     <!-- Wrapper for full height layout -->
     <div class="main-wrapper d-flex flex-column min-vh-100">
 
+        
+        
         {{-- Content Section --}}
         <div class="content flex-grow-1">
             @yield('content')

@@ -19,10 +19,10 @@ class FrontController extends Controller
     // Daftar semua artikel
     public function articles()
     {
-        $articles = Article::orderBy('created_at', 'desc')->get();
-        return view('front.articles', compact('articles'));
+        $populer_articles = Article::orderBy('views', 'desc')->take(3)->get();
+        $articles = Article::orderBy('created_at', 'desc')->paginate(12); // Changed from get() to paginate(20)
+        return view('front.articles', compact('articles', 'populer_articles'));
     }
-
     // Halaman kontak
     public function contact()
     {
@@ -39,4 +39,6 @@ class FrontController extends Controller
 
         return view('front.article_show', compact('article'));
     }
+
+   
 }

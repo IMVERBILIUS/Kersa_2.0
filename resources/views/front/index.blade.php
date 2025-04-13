@@ -52,10 +52,10 @@
 </section>
 
 <!-- Popular Articles -->
-<div class="container py-5">
+<div class="container my-5">
     <h3 class="fw-bold mb-4">Popular Articles</h3>
     <div id="popularArticlesCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
+        <div class="carousel-inner py-3">
             @foreach($populer_articles->chunk(3) as $chunkIndex => $chunk)
             <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -90,15 +90,15 @@
 </div>
 
 <!-- Latest Articles -->
-<div class="container py-5">
+<div class="container mb-5">
     <h3 class="fw-bold mb-4">Latest Articles</h3>
     <div id="latestArticlesCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
+        <div class="carousel-inner py-3">
             @foreach($latest_articles->chunk(3) as $chunkIndex => $chunk)
             <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     @foreach($chunk as $article)
-                    <div class="col">
+                    <div class="col" >
                         <a href="{{ route('front.articles.show', $article->id) }}">
                             <div class="card border-0 rounded-3 overflow-hidden position-relative" style="height: 300px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                                 <div class="ratio ratio-4x3">
@@ -126,5 +126,25 @@
         </button>
     </div>
 </div>
+
+<style>
+.card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    z-index: 10; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+}
+
+.overlay {
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .overlay {
+    opacity: 0.9; 
+}
+</style>
 
 @endsection

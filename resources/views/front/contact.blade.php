@@ -8,7 +8,7 @@
                    style="background-color: #F0F5FF; ; border-radius: 8px;">
                     <i class="fas fa-arrow-left me-2"></i> Back
                 </a>
-            </div>
+        </div>
         <!-- Header Section with Subtle Gradient Background -->
         <div class="text-center mb-5 p-4 rounded-4">
             <h1 class="fw-bold mb-3 text-dark" >Get in Touch</h1>

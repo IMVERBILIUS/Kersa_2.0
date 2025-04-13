@@ -12,22 +12,22 @@
 
         <!-- Links -->
         <div class="col-md-4 text-center">
-          <h5 class="fw-bold mb-3">Navigasi</h5>
-          <ul class="list-unstyled d-flex flex-column gap-2 align-items-center">
-            <li><a href="#" class="text-white text-decoration-none hover-link">Beranda</a></li>
-            <li><a href="#" class="text-white text-decoration-none hover-link">Tentang Kami</a></li>
-            <li><a href="{{ route('front.articles') }}" class="text-white text-decoration-none hover-link">Artikel</a></li>
-            <li><a href="{{ route('front.contact') }}" class="text-white text-decoration-none hover-link">Kontak</a></li>
+          <h5 class="fw-bold mb-3">Navigation</h5>
+          <ul class="list-unstyled d-flex  flex-column gap-2 align-items-center ">
+            <li><a href="{{ route('front.index') }}" class="text-white text-decoration-none hover-link">Home</a></li>
+            <li><a href="#" class="text-white text-decoration-none hover-link">About Us</a></li>
+            <li><a href="{{ route('front.articles') }}" class="text-white text-decoration-none hover-link">Articles</a></li>
+            <li><a href="{{ route('front.contact') }}" class="text-white text-decoration-none hover-link">Contact</a></li>
           </ul>
         </div>
 
         <!-- Contact -->
         <div class="col-md-4 text-md-end text-center">
-          <h5 class="fw-bold mb-3">Kontak Kami</h5>
+          <h5 class="fw-bold mb-3">Contact Us</h5>
           <p class="mb-1">Email:
             <a href="mailto:kersa.id@gmail.com" class="text-warning text-decoration-none">kersa.id@gmail.com</a>
           </p>
-          <p class="mb-3">Telepon:
+          <p class="mb-3">Phone:
             <a href="tel:+6220955595" class="text-warning text-decoration-none">+62 822-2095-5595</a>
           </p>
           <div class="d-flex justify-content-center justify-content-md-end gap-3">
