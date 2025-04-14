@@ -4,24 +4,57 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Facades\Agent;
 
 class FrontController extends Controller
 {
     // Homepage
     public function index()
     {
-        $latest_articles = Article::orderBy('created_at', 'desc')->take(6)->get();  // Ambil 6 artikel
-        $populer_articles = Article::orderBy('views', 'desc')->take(6)->get();  // Ambil 6 artikel populer
-        return view('front.index', compact('latest_articles', 'populer_articles'));
+        // Ambil 6 artikel terbaru
+        $latest_articles = Article::orderBy('created_at', 'desc')->take(6)->get();
+
+        // Ambil 6 artikel populer
+        $populer_articles = Article::orderBy('views', 'desc')->take(6)->get();
+
+        // Tentukan ukuran chunk berdasarkan ukuran layar (mobile vs desktop)
+        $chunk_size = (request()->header('User-Agent') && preg_match('/Mobile|Android|iPhone/', request()->header('User-Agent'))) ? 1 : 3;
+
+        return view('front.index', compact('latest_articles', 'populer_articles', 'chunk_size'));
     }
 
 
-    // Daftar semua artikel
-    public function articles()
+
+    public function articles(Request $request)
     {
-        $articles = Article::orderBy('created_at', 'desc')->get();
-        return view('front.articles', compact('articles'));
+        // Get the filter from the request
+        $filter = $request->input('filter', 'latest'); // Default to 'latest' if no filter is provided
+
+        // Apply the filter logic
+        switch ($filter) {
+            case 'latest':
+                // Default sorting by created_at for latest articles
+                $articles = Article::orderBy('created_at', 'desc')->paginate(6);
+                break;
+            case 'popular':
+                // Example: sorting by views for popular articles (assumes 'views' column exists)
+                $articles = Article::orderBy('views', 'desc')->paginate(6);
+                break;
+            case 'author':
+                // Example: sorting by author name (assumes 'author' column exists)
+                $articles = Article::orderBy('author', 'asc')->paginate(6);
+                break;
+            default:
+                // Default sorting by created_at for latest articles
+                $articles = Article::orderBy('created_at', 'desc')->paginate(6);
+                break;
+        }
+
+        // Return the view with the articles and the selected filter
+        return view('front.articles', compact('articles', 'filter'));
     }
+
+
 
     // Halaman kontak
     public function contact()
@@ -39,4 +72,5 @@ class FrontController extends Controller
 
         return view('front.article_show', compact('article'));
     }
+
 }
