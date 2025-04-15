@@ -24,7 +24,7 @@
 </section>
 
 <div class="container py-5 mt-5">
-    <h2 class="fw-bold mb-4 text-center">All Articles</h2>
+    <h2 class="fw-bold mb-4 text-center">Semua Artikel</h2>
 
     <!-- Filter Dropdown -->
     <div class="mb-4">
@@ -41,7 +41,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @forelse($articles as $article)
             <div class="col">
-                <a href="{{ route('front.articles.show', $article->id) }}" class="text-decoration-none text-dark">
+                <a href="{{ route('front.articles.show', Crypt::encryptString($article->id)) }}">
                     <div class="card h-100 border-0 shadow-sm card-hover-zoom overflow-hidden">
                         <div class="ratio ratio-4x3">
                             <img src="{{ asset('storage/' . $article->thumbnail) }}" class="card-img-top object-fit-cover" alt="{{ $article->title }}">
