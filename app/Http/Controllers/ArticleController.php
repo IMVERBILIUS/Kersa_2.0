@@ -13,11 +13,29 @@ use Illuminate\Support\Facades\Storage;
 class ArticleController extends Controller
 {
     // Tampilkan semua artikel
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::orderBy('created_at', 'desc')->paginate(6); // Paginate with 6 articles per page
+        $sort = $request->query('sort', 'date');
+
+        $articles = Article::query();
+
+        switch ($sort) {
+            case 'view':
+                $articles->orderBy('views', 'desc');
+                break;
+            case 'status':
+                $articles->orderBy('status', 'asc');
+                break;
+            default: // 'date'
+                $articles->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $articles = $articles->paginate(6)->withQueryString(); // Keep query string during pagination
+
         return view('articles.manage', compact('articles'));
     }
+
     // Tampilkan form tambah artikel
     public function create()
     {
@@ -177,23 +195,27 @@ class ArticleController extends Controller
     // Hapus artikel
     public function destroy($id)
     {
-        $article = Article::findOrFail($id);
+        $article = Article::with('subheadings.paragraphs')->findOrFail($id);
 
-        // Hapus thumbnail jika ada
-        if ($article->thumbnail && \Storage::disk('public')->exists($article->thumbnail)) {
-            \Storage::disk('public')->delete($article->thumbnail);
+        // Hapus thumbnail jika ada dan valid path
+        if ($article->thumbnail) {
+            $thumbnailPath = storage_path('app/public/' . $article->thumbnail);
+            if (file_exists($thumbnailPath)) {
+                unlink($thumbnailPath); // alternatif dari \Storage, langsung delete
+            }
         }
 
-        // Hapus relasi terkait, jika ada (misalnya subheadings dan paragraphs)
-        $article->subheadings()->each(function ($sub) {
+        // Hapus relasi: paragraphs -> subheadings
+        $article->subheadings->each(function ($sub) {
             $sub->paragraphs()->delete();
             $sub->delete();
         });
 
         $article->delete();
 
-        return redirect()->route('admin.articles.manage')->with('success', 'Article deleted successfully.');
+        return redirect()->route('admin.articles.manage')->with('success', 'Article and associated image deleted successfully.');
     }
+
     public function show($id)
     {
         $article = Article::with('subheadings.paragraphs')->findOrFail($id);

@@ -112,8 +112,8 @@
 <!-- Latest Articles -->
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold mb-0">Latest Articles</h3>
-        <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">See All</a>
+        <h3 class="fw-bold mb-0">Artikel Terbaru</h3>
+        <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">Lihat semuanya</a>
     </div>
     <div id="latestArticlesCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -122,7 +122,7 @@
                     <div class="row g-4">
                         @foreach($chunk as $article)
                             <div class="col">
-                                <a href="{{ route('front.articles.show', $article->id) }}">
+                                <a href="{{ route('front.articles.show', Crypt::encryptString($article->id)) }}">
                                     <div class="card card-hover-zoom border-0 rounded-3 overflow-hidden position-relative" style="height: 300px;">
                                         <div class="ratio ratio-4x3">
                                             <img src="{{ asset('storage/' . $article->thumbnail) }}" class="img-fluid object-fit-cover w-100 h-100" alt="{{ $article->title }}">
@@ -152,8 +152,8 @@
 <!-- Popular Articles -->
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold mb-0">Popular Articles</h3>
-        <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">See All</a>
+        <h3 class="fw-bold mb-0">Artikel Populer</h3>
+        <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">Lihat semuanya</a>
     </div>
     <div id="popularArticlesCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -189,7 +189,7 @@
 </div>
 
 <div class="text-center mt-4">
-    <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">See All</a>
+    <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">Lihat semuanya</a>
 </div>
 
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Facades\Agent;
+use Illuminate\Support\Facades\Crypt;
 
 class FrontController extends Controller
 {
@@ -57,7 +58,13 @@ class FrontController extends Controller
     // Menampilkan detail artikel berdasarkan ID
     public function show($id)
     {
-        $article = Article::findOrFail($id);
+        try {
+            $decryptedId = Crypt::decryptString($id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            abort(404); // kalau gagal dekripsi, tampilkan 404
+        }
+
+        $article = Article::findOrFail($decryptedId);
 
         // Tambahkan jumlah view setiap kali dibuka
         $article->increment('views');
