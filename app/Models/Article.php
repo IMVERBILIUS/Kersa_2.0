@@ -17,4 +17,9 @@ class Article extends Model
     return $this->hasMany(Subheading::class, 'article_id', 'id');
 }
 
+public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
+
 }

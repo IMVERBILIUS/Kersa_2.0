@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FrontController;
 use App\Models\Article;
 
@@ -21,6 +22,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Redirect based on role
 Route::get('/dashboard', [AuthController::class, 'redirectDashboard'])->middleware('auth')->name('redirect.dashboard');
+
+// ===== Comment Routes =====
+Route::middleware(['auth'])->group(function () {
+    Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+});
 
 // ===== Admin Routes =====
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -64,7 +72,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('profile');
 });
 
-// ===== Fallback Route =====
-Route::fallback(function () {
-    return view('errors.404');
-});
+
+Route::get('auth/google', [App\Http\Controllers\Auth\GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'handleGoogleCallback']);

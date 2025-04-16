@@ -79,6 +79,81 @@
                 @endif
             </div>
 
+            <!-- Comments Section -->
+            <div class="card border-0 rounded-4 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h3 class="fw-bold fs-5 mb-4">Komentar ({{ $article->comments->count() }})</h3>
+                    
+                    <!-- Comment Form -->
+                    @auth
+                        <form action="{{ route('comments.store', $article->id) }}" method="POST" class="mb-4">
+                            @csrf
+                            <div class="form-group">
+                                <textarea name="content" rows="3" class="form-control @error('content') is-invalid @enderror" 
+                                    placeholder="Tulis komentar Anda..."></textarea>
+                                @error('content')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">
+                                <i class="fas fa-paper-plane me-2"></i>Kirim Komentar
+                            </button>
+                        </form>
+                    @else
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Silakan <a href="{{ route('login') }}">login</a> untuk memberikan komentar.
+                        </div>
+                    @endauth
+
+                    <!-- Comments List -->
+                    <div class="comments-list">
+                        @forelse($article->comments()->with('user')->latest()->get() as $comment)
+                            <div class="comment-item border-bottom py-3">
+                                <div class="d-flex align-items-start">
+                                    <div class="d-flex justify-content-center align-items-center rounded-circle me-3"
+                                         style="width: 40px; height: 40px; background-color: #F0F5FF;">
+                                        <i class="fas fa-user" style="color: #5B93FF;"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <h6 class="mb-0 fw-medium">{{ $comment->user->name }}</h6>
+                                            <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                        </div>
+                                        <p class="mb-2" style="color: #5F738C;">{{ $comment->content }}</p>
+                                        
+                                        @auth
+                                            @if(auth()->id() === $comment->user_id)
+                                                <div class="comment-actions">
+                                                    <button class="btn btn-sm btn-link text-primary edit-comment" 
+                                                            data-comment-id="{{ $comment->id }}"
+                                                            data-content="{{ $comment->content }}">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </button>
+                                                    <form action="{{ route('comments.destroy', $comment->id) }}" 
+                                                          method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-link text-danger" 
+                                                                onclick="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">
+                                                            <i class="fas fa-trash"></i> Hapus
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            @endif
+                                        @endauth
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-center py-4">
+                                <p class="text-muted mb-0">Belum ada komentar. Jadilah yang pertama berkomentar!</p>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -100,6 +175,22 @@
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(108, 99, 255, 0.3);
 }
+ .comment-item:last-child {
+        border-bottom: none !important;
+    }
+
+    .comment-actions {
+        font-size: 0.875rem;
+    }
+
+    .comment-actions .btn-link {
+        padding: 0.25rem 0.5rem;
+        text-decoration: none;
+    }
+
+    .comment-actions .btn-link:hover {
+        text-decoration: underline;
+    }
 
 
     @media (max-width: 768px) {
@@ -112,4 +203,41 @@
         }
     }
 </style>
+
+@push('scripts')
+<script>
+    // Edit comment functionality
+    document.querySelectorAll('.edit-comment').forEach(button => {
+        button.addEventListener('click', function() {
+            const commentId = this.dataset.commentId;
+            const content = this.dataset.content;
+            
+            // Create edit form
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/comments/${commentId}`;
+            form.innerHTML = `
+                @csrf
+                @method('PUT')
+                <div class="form-group">
+                    <textarea name="content" rows="3" class="form-control">${content}</textarea>
+                </div>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                    <button type="button" class="btn btn-secondary btn-sm cancel-edit">Batal</button>
+                </div>
+            `;
+
+            // Replace comment content with form
+            const commentContent = this.closest('.comment-item').querySelector('p');
+            commentContent.replaceWith(form);
+
+            // Handle cancel
+            form.querySelector('.cancel-edit').addEventListener('click', () => {
+                form.replaceWith(commentContent);
+            });
+        });
+    });
+</script>
+@endpush
 @endsection
