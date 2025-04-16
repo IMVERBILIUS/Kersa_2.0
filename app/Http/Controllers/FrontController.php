@@ -12,12 +12,11 @@ class FrontController extends Controller
     // Homepage
     public function index()
     {
-        $articles = Article::where('status', 'published');
         // Ambil 6 artikel terbaru
-        $latest_articles = $articles->orderBy('created_at', 'desc')->take(6)->get();
+        $latest_articles = Article::where('status', 'published')->orderBy('created_at', 'desc')->take(6)->get();
 
         // Ambil 6 artikel populer
-        $populer_articles = $articles->orderBy('views', 'desc')->take(6)->get();
+        $populer_articles = Article::where('status', 'published')->orderBy('views', 'desc')->take(6)->get();
 
         // Tentukan ukuran chunk berdasarkan ukuran layar (mobile vs desktop)
         $chunk_size = (request()->header('User-Agent') && preg_match('/Mobile|Android|iPhone/', request()->header('User-Agent'))) ? 1 : 3;

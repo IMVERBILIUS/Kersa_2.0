@@ -37,18 +37,22 @@
         .carousel-control-next {
             right: -30px;
         }
+        .card{
+            height: fit-content;
+        }
     }
 
     .card-hover-zoom {
         transition: transform 0.5s ease, box-shadow 0.3s ease;
         position: relative;
         z-index: 1;
+        box-shadow: 0 3px 8px rgba(200, 200, 200, 0.3);
     }
 
     .card-hover-zoom:hover {
-        transform: scale(1.25);
+        transform: scale(1.2);
         z-index: 999;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 10px 30px rgba(150, 150, 150, 0.3);
     }
 
     .card-hover-zoom .overlay {
@@ -122,14 +126,14 @@
                     <div class="row g-4">
                         @foreach($chunk as $article)
                             <div class="col">
-                                <a href="{{ route('front.articles.show', Crypt::encryptString($article->id)) }}">
-                                    <div class="card card-hover-zoom border-0 rounded-3 overflow-hidden position-relative" style="height: 300px;">
-                                        <div class="ratio ratio-4x3">
+                                <a href="{{ route('front.articles.show', Crypt::encryptString($article->id)) }}" class="text-decoration-none">
+                                    <div class="card  card-hover-zoom border-0 rounded-3 overflow-hidden position-relative" style="height: 350px;">
+                                        <div class="ratio ratio-16x9 mb-2">
                                             <img src="{{ asset('storage/' . $article->thumbnail) }}" class="img-fluid object-fit-cover w-100 h-100" alt="{{ $article->title }}">
                                         </div>
-                                        <div class=" d-flex flex-column justify-content-center align-items-center text-center px-3 position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
-                                            <h5 class="text-white fs-5 fw-semibold">{{ $article->title }}</h5>
-                                            <p class="text-white opacity-75 fs-8 clamp-text">{{ Str::limit($article->description, 100) }}</p>
+                                        <div class=" d-flex flex-column justify-content-center align-items-start     px-3">
+                                            <h5 class=" fs-5 fw-semibold">{{ Str::limit($article->title, 50) }}</h5>
+                                            <p class=" opacity-75 fs-7 clamp-text">{{ Str::limit($article->description, 70) }}</p>
                                         </div>
                                     </div>
                                 </a>
@@ -162,14 +166,14 @@
                     <div class="row g-4">
                         @foreach($chunk as $article)
                             <div class="col">
-                                <a href="{{ route('front.articles.show', $article->id) }}">
-                                    <div class="card card-hover-zoom border-0 rounded-3 overflow-hidden position-relative" style="height: 300px;">
-                                        <div class="ratio ratio-4x3">
+                                <a href="{{ route('front.articles.show', Crypt::encryptString($article->id)) }}" class="text-decoration-none">
+                                    <div class="card  card-hover-zoom border-0 rounded-3 overflow-hidden position-relative" style="height: 350px;">
+                                        <div class="ratio ratio-16x9 mb-2">
                                             <img src="{{ asset('storage/' . $article->thumbnail) }}" class="img-fluid object-fit-cover w-100 h-100" alt="{{ $article->title }}">
                                         </div>
-                                        <div class=" d-flex flex-column justify-content-center align-items-center text-center px-3 position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
-                                            <h5 class="text-white fs-5 fw-semibold">{{ $article->title }}</h5>
-                                            <p class="text-white opacity-75 fs-8 clamp-text">{{ Str::limit($article->description, 100) }}</p>
+                                        <div class=" d-flex flex-column justify-content-center align-items-start     px-3">
+                                            <h5 class=" fs-5 fw-semibold">{{ Str::limit($article->title, 50) }}</h5>
+                                            <p class=" opacity-75 fs-7 clamp-text">{{ Str::limit($article->description, 70) }}</p>
                                         </div>
                                     </div>
                                 </a>
