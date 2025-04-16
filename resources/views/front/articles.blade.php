@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="position-relative">
-    <nav class="navbar navbar-expand-lg bg-transparent py-3 position-absolute top-0 start-0 w-100 z-3">
+    <nav class="navbar navbar-expand-lg bg-white py-3 position-absolute top-0 start-0 w-100 z-3">
         <div class="container">
             <div class="navbar-brand d-flex flex-column align-items-start">
                 <h1 class="mb-0 fs-4 fw-semibold text-dark">KERSA</h1>
@@ -39,27 +39,29 @@
         </form>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @forelse($articles as $article)
-            <div class="col">
-                <a href="{{ route('front.articles.show', Crypt::encryptString($article->id)) }}">
-                    <div class="card h-100 border-0 shadow-sm card-hover-zoom overflow-hidden">
-                        <div class="ratio ratio-4x3">
-                            <img src="{{ asset('storage/' . $article->thumbnail) }}" class="card-img-top object-fit-cover" alt="{{ $article->title }}">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-semibold">{{ $article->title }}</h5>
-                            <p class="card-text">{{ Str::limit($article->description, 100) }}</p>
-                        </div>
+   <div class="row row-cols-2 row-cols-md-3 g-3 md-g-4">
+    @forelse($articles as $article)
+        <div class="col">
+            <a href="{{ route('front.articles.show', Crypt::encryptString($article->id)) }}">
+                <div class="card h-100 border-0 shadow-sm card-hover-zoom overflow-hidden">
+                    <div class="ratio ratio-4x3">
+                        <img src="{{ asset('storage/' . $article->thumbnail) }}" class="card-img-top object-fit-cover" alt="{{ $article->title }}">
                     </div>
-                </a>
-            </div>
-        @empty
-            <div class="col-12">
-                <p class="text-center">No articles found.</p>
-            </div>
-        @endforelse
-    </div>
+                   <div class="card-body">
+                        <h5 class="card-title fw-semibold title-text">{{ $article->title }}</h5>
+                        <p class="card-text description-text">{{ $article->description }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    @empty
+        <div class="col-12">
+            <p class="text-center">No articles found.</p>
+        </div>
+    @endforelse
+</div>
+
+
 
     <!-- Pagination -->
     <div class="mt-4 d-flex justify-content-center">
@@ -75,6 +77,9 @@
 </div>
 
 <style>
+    a{
+        text-decoration: none
+    }
     /* Custom Pagination Styles */
     .pagination {
         list-style: none;
@@ -148,6 +153,40 @@
         width: 200px;
         display: inline-block;
     }
+
+     /* Text clamping for titles */
+    .title-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Limit to 2 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Text clamping for descriptions */
+    .description-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Limit to 3 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0;
+    }
+
+    /* Responsive adjustments for small screens */
+    @media (max-width: 767.98px) {
+        .title-text {
+            font-size: 16px; /* Smaller font size for titles on mobile */
+            -webkit-line-clamp: 3; /* Still 2 lines for titles */
+        }
+        
+        .description-text {
+            -webkit-line-clamp: 2; /* Reduce to 2 lines on mobile */
+            font-size: 12px; /* Slightly smaller text on mobile */
+        }
+    }
+
 </style>
 
 @endsection

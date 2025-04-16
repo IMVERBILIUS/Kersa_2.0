@@ -12,11 +12,12 @@ class FrontController extends Controller
     // Homepage
     public function index()
     {
+        $articles = Article::where('status', 'published');
         // Ambil 6 artikel terbaru
-        $latest_articles = Article::orderBy('created_at', 'desc')->take(6)->get();
+        $latest_articles = $articles->orderBy('created_at', 'desc')->take(6)->get();
 
         // Ambil 6 artikel populer
-        $populer_articles = Article::orderBy('views', 'desc')->take(6)->get();
+        $populer_articles = $articles->orderBy('views', 'desc')->take(6)->get();
 
         // Tentukan ukuran chunk berdasarkan ukuran layar (mobile vs desktop)
         $chunk_size = (request()->header('User-Agent') && preg_match('/Mobile|Android|iPhone/', request()->header('User-Agent'))) ? 1 : 3;
@@ -32,17 +33,20 @@ class FrontController extends Controller
         // Ambil filter dari request (default: 'latest')
         $filter = $request->input('filter', 'latest');
 
+
+        $articles = Article::where('status', 'published');
+
         // Terapkan logika filter
         switch ($filter) {
             case 'popular':
-                $articles = Article::orderBy('views', 'desc')->paginate(6);
+                $articles = $articles->orderBy('views', 'desc')->paginate(6);
                 break;
             case 'author':
-                $articles = Article::orderBy('author', 'asc')->paginate(6);
+                $articles = $articles->orderBy('author', 'asc')->paginate(6);   
                 break;
             case 'latest':
             default:
-                $articles = Article::orderBy('created_at', 'desc')->paginate(6);
+                $articles = $articles->orderBy('created_at', 'desc')->paginate(6);
                 break;
         }
 

@@ -56,9 +56,9 @@
         transition: opacity 0.3s ease;
     }
 
-    .card-hover-zoom:hover .overlay {
+    /* .card-hover-zoom:hover .overlay {
         opacity: 1;
-    }
+    } */
 
     .carousel-inner,
     .carousel-item {
@@ -93,7 +93,7 @@
             Your browser does not support the video tag.
         </video>
         <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50 z-2"></div>
-        <div class="container position-relative text-white z-3">
+        <div class="container position-relative text-white z-2">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-md-10">
                     <div class="p-4 p-md-5 text-center">
@@ -127,9 +127,9 @@
                                         <div class="ratio ratio-4x3">
                                             <img src="{{ asset('storage/' . $article->thumbnail) }}" class="img-fluid object-fit-cover w-100 h-100" alt="{{ $article->title }}">
                                         </div>
-                                        <div class="overlay d-flex flex-column justify-content-center align-items-center text-center px-3 position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
+                                        <div class=" d-flex flex-column justify-content-center align-items-center text-center px-3 position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
                                             <h5 class="text-white fs-5 fw-semibold">{{ $article->title }}</h5>
-                                            <p class="text-white fs-7 clamp-text">{{ Str::limit($article->description, 100) }}</p>
+                                            <p class="text-white opacity-75 fs-8 clamp-text">{{ Str::limit($article->description, 100) }}</p>
                                         </div>
                                     </div>
                                 </a>
@@ -167,9 +167,9 @@
                                         <div class="ratio ratio-4x3">
                                             <img src="{{ asset('storage/' . $article->thumbnail) }}" class="img-fluid object-fit-cover w-100 h-100" alt="{{ $article->title }}">
                                         </div>
-                                        <div class="overlay d-flex flex-column justify-content-center align-items-center text-center px-3 position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
+                                        <div class=" d-flex flex-column justify-content-center align-items-center text-center px-3 position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
                                             <h5 class="text-white fs-5 fw-semibold">{{ $article->title }}</h5>
-                                            <p class="text-white fs-7 clamp-text">{{ Str::limit($article->description, 100) }}</p>
+                                            <p class="text-white opacity-75 fs-8 clamp-text">{{ Str::limit($article->description, 100) }}</p>
                                         </div>
                                     </div>
                                 </a>
