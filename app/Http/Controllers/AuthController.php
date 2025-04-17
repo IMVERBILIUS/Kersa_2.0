@@ -80,7 +80,7 @@ class AuthController extends Controller
         return match ($role) {
             'admin'  => redirect('/admin/dashboard'),
             'author' => redirect('/author/dashboard'),
-            'reader' => redirect('/reader/dashboard'),
+            'reader' => redirect('/'),
             default  => abort(403),
         };
     }
