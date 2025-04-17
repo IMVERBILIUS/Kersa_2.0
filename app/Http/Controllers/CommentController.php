@@ -35,10 +35,7 @@ class CommentController extends Controller
             'content' => $request->content,
         ]);
 
-        return response()->json([
-            'message' => 'Komentar berhasil diperbarui',
-            'comment' => $comment
-        ]);
+        return redirect()->back()->with('success', 'Komentar berhasil diperbarui');
     }
 
     public function destroy(Comment $comment)
@@ -47,8 +44,6 @@ class CommentController extends Controller
 
         $comment->delete();
 
-        return response()->json([
-            'message' => 'Komentar berhasil dihapus'
-        ]);
+        return redirect()->back()->with('success', 'Komentar berhasil dihapus');
     }
 } 
