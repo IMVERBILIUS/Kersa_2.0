@@ -40,4 +40,4 @@ class GoogleController extends Controller
             return redirect('auth/google');
         }
     }
-} 
+}

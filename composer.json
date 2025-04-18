@@ -6,13 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "google/apiclient": "^2.18",
         "guzzlehttp/guzzle": "^7.2",
+        "illuminate/auth": "^9.0",
         "intervention/image": "^2.7",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.19",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "laravel/ui": "^4.6",
+        "sendgrid/sendgrid": "^8.1",
+        "swiftmailer/swiftmailer": "^6.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
