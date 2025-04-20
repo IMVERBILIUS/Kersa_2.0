@@ -62,7 +62,7 @@ class ResetPasswordController extends Controller
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
                 $user->forceFill([
-                    'password' => Hash::make($password),
+                    'password' => md5($password),
                 ])->save();
 
                 // Hapus token reset dari database
