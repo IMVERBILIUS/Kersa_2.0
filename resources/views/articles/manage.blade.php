@@ -135,41 +135,65 @@
                 </table>
             </div>
 
-            {{-- Custom Pagination --}}
-            @if($articles->hasPages())
-                <div class="mt-4 d-flex justify-content-center">
-                    <nav aria-label="Article pagination">
-                        <ul class="pagination pagination-sm mb-0">
-                            {{-- Previous Page Link --}}
-                            @if ($articles->onFirstPage())
-                                <li class="page-item disabled"><span class="page-link rounded-3">&laquo;</span></li>
-                            @else
-                                <li class="page-item">
-                                    <a class="page-link rounded-3" href="{{ $articles->previousPageUrl() }}" rel="prev">&laquo;</a>
-                                </li>
-                            @endif
+{{-- Custom Pagination --}}
+@if($articles->hasPages())
+    <div class="mt-4 d-flex justify-content-center">
+        <nav aria-label="Article pagination">
+            <ul class="pagination pagination-sm mb-0">
+                {{-- Previous Page Link --}}
+                @if ($articles->onFirstPage())
+                    <li class="page-item disabled"><span class="page-link rounded-3">&laquo;</span></li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link rounded-3" href="{{ $articles->previousPageUrl() }}" rel="prev">&laquo;</a>
+                    </li>
+                @endif
 
-                            {{-- Pagination Elements --}}
-                            @foreach ($articles->links()->elements[0] as $page => $url)
-                                @if ($page == $articles->currentPage())
-                                    <li class="page-item active"><span class="page-link rounded-3" style="background-color: #36b37e; border-color: #36b37e;">{{ $page }}</span></li>
-                                @else
-                                    <li class="page-item"><a class="page-link rounded-3" href="{{ $url }}">{{ $page }}</a></li>
-                                @endif
-                            @endforeach
+                {{-- Pagination Elements --}}
+                @php
+                    $currentPage = $articles->currentPage();
+                    $lastPage = $articles->lastPage();
+                    $pageRange = 5;  // Number of page links to show at once
 
-                            {{-- Next Page Link --}}
-                            @if ($articles->hasMorePages())
-                                <li class="page-item">
-                                    <a class="page-link rounded-3" href="{{ $articles->nextPageUrl() }}" rel="next">&raquo;</a>
-                                </li>
-                            @else
-                                <li class="page-item disabled"><span class="page-link rounded-3">&raquo;</span></li>
-                            @endif
-                        </ul>
-                    </nav>
-                </div>
-            @endif
+                    // Calculate the range of pages to show (for example, 1-5, 6-10)
+                    $startPage = max(1, $currentPage - floor($pageRange / 2));
+                    $endPage = min($lastPage, $currentPage + floor($pageRange / 2));
+
+                    // Adjust the range if we're close to the start or end
+                    if ($currentPage < floor($pageRange / 2)) {
+                        $endPage = min($lastPage, $pageRange);
+                    }
+
+                    if ($currentPage > $lastPage - floor($pageRange / 2)) {
+                        $startPage = max(1, $lastPage - $pageRange + 1);
+                    }
+                @endphp
+
+                {{-- Page Number Links --}}
+                @for ($i = $startPage; $i <= $endPage; $i++)
+                    @if ($i == $currentPage)
+                        <li class="page-item active">
+                            <span class="page-link rounded-3" style="background-color: #36b37e; border-color: #36b37e;">{{ $i }}</span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link rounded-3" href="{{ $articles->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endif
+                @endfor
+
+                {{-- Next Page Link --}}
+                @if ($articles->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link rounded-3" href="{{ $articles->nextPageUrl() }}" rel="next">&raquo;</a>
+                    </li>
+                @else
+                    <li class="page-item disabled"><span class="page-link rounded-3">&raquo;</span></li>
+                @endif
+            </ul>
+        </nav>
+    </div>
+@endif
 
         </div>
     </div>

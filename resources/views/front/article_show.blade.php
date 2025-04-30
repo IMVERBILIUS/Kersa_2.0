@@ -28,7 +28,7 @@
                     </div>
                 </div>
 
-                <h1 class="fw-bold mb-3">{{ $article->title }}</h1>
+                <h1 class="fw-bold mb-3 article-text">{{ $article->title }}</h1>
 
                 <div class="d-flex align-items-center mb-4">
                     <div class="d-flex justify-content-center align-items-center rounded-circle me-3"
@@ -65,7 +65,7 @@
                     <div class="article-content">
                         @foreach($article->subheadings as $subheading)
                             <div class="subheading-section mb-4">
-                                <h3 class="fw-bold mb-3" style="color: #3A4A5C; padding-bottom: 10px; border-bottom: 2px solid #F0F5FF;">
+                                <h3 class="fw-bold mb-3 article-text" style="color: #3A4A5C; padding-bottom: 10px; border-bottom: 2px solid #F0F5FF;">
                                     {{ $subheading->title }}
                                 </h3>
                                 @foreach($subheading->paragraphs as $paragraph)
@@ -82,14 +82,14 @@
             <!-- Comments Section -->
             <div class="card border-0 rounded-4 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h3 class="fw-bold fs-5 mb-4">Komentar ({{ $article->comments->count() }})</h3>
-                    
+                    <h3 class="fw-bold fs-5 mb-4 article-text">Komentar ({{ $article->comments->count() }})</h3>
+
                     <!-- Comment Form -->
                     @auth
                         <form action="{{ route('comments.store', $article->id) }}" method="POST" class="mb-4">
                             @csrf
                             <div class="form-group">
-                                <textarea name="content" rows="3" class="form-control @error('content') is-invalid @enderror" 
+                                <textarea name="content" rows="3" class="form-control @error('content') is-invalid @enderror"
                                     placeholder="Tulis komentar Anda..."></textarea>
                                 @error('content')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -101,7 +101,7 @@
                         </form>
                     @else
                         <div class="alert alert-info">
-                            <i class="fas fa-info-circle me-2"></i>
+                            <i class="fas fa-info-circle me-2 article-text"></i>
                             Silakan <a href="{{ route('login') }}">login</a> untuk memberikan komentar.
                         </div>
                     @endauth
@@ -121,20 +121,20 @@
                                             <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
                                         </div>
                                         <p class="mb-2" style="color: #5F738C;">{{ $comment->content }}</p>
-                                        
+
                                         @auth
                                             @if(auth()->id() === $comment->user_id)
                                                 <div class="comment-actions">
-                                                    <button class="btn btn-sm btn-link text-primary edit-comment" 
+                                                    <button class="btn btn-sm btn-link text-primary edit-comment"
                                                             data-comment-id="{{ $comment->id }}"
                                                             data-content="{{ $comment->content }}">
                                                         <i class="fas fa-edit"></i> Edit
                                                     </button>
-                                                    <form action="{{ route('comments.destroy', $comment->id) }}" 
+                                                    <form action="{{ route('comments.destroy', $comment->id) }}"
                                                           method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-link text-danger" 
+                                                        <button type="submit" class="btn btn-sm btn-link text-danger"
                                                                 onclick="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">
                                                             <i class="fas fa-trash"></i> Hapus
                                                         </button>
@@ -147,7 +147,7 @@
                             </div>
                         @empty
                             <div class="text-center py-4">
-                                <p class="text-muted mb-0">Belum ada komentar. Jadilah yang pertama berkomentar!</p>
+                                <p class="text-muted mb-0 article-text">Belum ada komentar. Jadilah yang pertama berkomentar!</p>
                             </div>
                         @endforelse
                     </div>
@@ -211,7 +211,7 @@
         button.addEventListener('click', function() {
             const commentId = this.dataset.commentId;
             const content = this.dataset.content;
-            
+
             // Create edit form
             const form = document.createElement('form');
             form.method = 'POST';

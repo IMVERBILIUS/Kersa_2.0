@@ -31,7 +31,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            padding-bottom: 80px; /* Space for logout button */
+            padding-bottom: 80px;
         }
 
         .sidebar h4 {
@@ -136,153 +136,120 @@
             flex-grow: 1;
         }
 
-        /* @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                padding-bottom: 85px;
-            }
-
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-                padding: 15px;
-            }
-
-            .content {
-                margin-top: 0;
-            }
-        } */
-         .mobile-block {
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(135deg, #f5f7fa 0%, #e6f7f1 100%);
-        padding: 2rem;
-        text-align: center;
-        overflow: hidden;
-        position: relative;
-        z-index: 9999;
-    }
-
-    .mobile-block-content {
-        background-color: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        border-radius: 24px;
-        padding: 2.5rem 2rem;
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-        width: 90%;
-        max-width: 400px;
-        animation: fadeIn 0.8s ease-out;
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .mobile-icon {
-        font-size: 3.5rem;
-        color: #36b37e;
-        margin-bottom: 1.5rem;
-        animation: pulse 2s infinite;
-    }
-
-    .mobile-block h2 {
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-    }
-
-    .mobile-block p {
-        color: #5b6171;
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-    }
-
-    .desktop-btn {
-        background-color: #36b37e;
-        color: white;
-        border: none;
-        padding: 0.8rem 1.5rem;
-        border-radius: 50px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 0 auto;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(54, 179, 126, 0.2);
-    }
-
-    .desktop-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(54, 179, 126, 0.3);
-    }
-
-    .bg-shapes::before {
-        content: '';
-        position: absolute;
-        top: -50px;
-        right: -50px;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background-color: rgba(54, 179, 126, 0.1);
-        z-index: -1;
-    }
-
-    .bg-shapes::after {
-        content: '';
-        position: absolute;
-        bottom: -70px;
-        left: -70px;
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        background-color: rgba(54, 179, 126, 0.08);
-        z-index: -1;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.1);
-        }
-        100% {
-            transform: scale(1);
-        }
-    }
-
-    @media (max-width: 768px) {
-        body > *:not(.mobile-block) {
-            display: none !important;
-        }
-
         .mobile-block {
-            display: flex !important;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e6f7f1 100%);
+            padding: 2rem;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            z-index: 9999;
         }
-    }
+
+        .mobile-block-content {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            width: 90%;
+            max-width: 400px;
+            animation: fadeIn 0.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mobile-icon {
+            font-size: 3.5rem;
+            color: #36b37e;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .mobile-block h2 {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .mobile-block p {
+            color: #5b6171;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .desktop-btn {
+            background-color: #36b37e;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(54, 179, 126, 0.2);
+        }
+
+        .desktop-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(54, 179, 126, 0.3);
+        }
+
+        .bg-shapes::before, .bg-shapes::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .bg-shapes::before {
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(54, 179, 126, 0.1);
+        }
+
+        .bg-shapes::after {
+            bottom: -70px;
+            left: -70px;
+            width: 250px;
+            height: 250px;
+            background-color: rgba(54, 179, 126, 0.08);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1);}
+            50% { transform: scale(1.1);}
+        }
+
+        @media (max-width: 768px) {
+            body > *:not(.mobile-block) {
+                display: none !important;
+            }
+            .mobile-block {
+                display: flex !important;
+            }
+        }
     </style>
 </head>
 <body>
 
- <!-- Pesan khusus untuk pengguna mobile -->
+<!-- Mobile Block -->
 <div class="mobile-block">
     <div class="mobile-block-content">
         <div class="bg-shapes"></div>
@@ -296,9 +263,10 @@
         </button>
     </div>
 </div>
+
 <div class="container-fluid p-0">
     <div class="row g-0">
-        <!-- Fixed Sidebar -->
+        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-content">
                 <div class="logo-container">
@@ -315,9 +283,13 @@
                     <a href="{{ route('admin.articles.manage') }}" class="{{ request()->routeIs('admin.articles.manage') ? 'active' : '' }}">
                         <i class="fas fa-file-alt"></i> Manage Articles
                     </a>
-                    <a href="{{ route('articles.approval') }}" class="{{ request()->routeIs('admin.articles.approval') ? 'active' : '' }}">
+                    <a href="{{ route('articles.approval') }}" class="{{ request()->routeIs('articles.approval') ? 'active' : '' }}">
                         <i class="fas fa-check-circle"></i> Detail / Approval
                     </a>
+                    <a href="{{ route('admin.galleries.manage') }}" class="{{ request()->routeIs('admin.galleries.manage') ? 'active' : '' }}">
+                        <i class="fas fa-image"></i> Gallery
+                    </a>
+
                 </div>
 
                 <form action="{{ route('logout') }}" method="POST">
@@ -341,5 +313,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @stack('scripts')
+
 </body>
 </html>

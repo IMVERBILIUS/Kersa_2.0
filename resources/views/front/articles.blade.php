@@ -24,7 +24,7 @@
 </section>
 
 <div class="container py-5 mt-5">
-    <h2 class="fw-bold mb-4 text-center">Semua Artikel</h2>
+    <h2 class="fw-bold mb-4 text-center article-text">Semua Artikel</h2>
 
     <!-- Filter Dropdown -->
     <div class="mb-4">
@@ -47,8 +47,8 @@
                         <img src="{{ asset('storage/' . $article->thumbnail) }}" class="card-img-top object-fit-cover" alt="{{ $article->title }}">
                     </div>
                    <div class="card-body">
-                        <h5 class="card-title fw-semibold title-text">{{ $article->title }}</h5>
-                        <p class="card-text description-text">{{ $article->description }}</p>
+                        <h5 class="card-title fw-semibold title-text article-text">{{ $article->title }}</h5>
+                        <p class="card-text description-text article-text">{{ $article->description }}</p>
                     </div>
                 </div>
             </a>
@@ -62,17 +62,58 @@
 
 
 
-    <!-- Pagination -->
-    <div class="mt-4 d-flex justify-content-center">
-        <!-- Custom Pagination -->
-        <ul class="pagination">
-            @for ($i = 1; $i <= $articles->lastPage(); $i++)
-                <li class="page-item {{ $i == $articles->currentPage() ? 'active' : '' }}">
-                    <a class="page-link btn btn-outline-dark" href="{{ $articles->url($i) }}">{{ $i }}</a>
-                </li>
-            @endfor
-        </ul>
-    </div>
+<div class="mt-4 d-flex justify-content-center">
+    <!-- Custom Pagination -->
+    <ul class="pagination">
+        {{-- Previous Page Link --}}
+        @if ($articles->onFirstPage())
+            <li class="page-item disabled">
+                <span class="page-link btn btn-outline-dark">&laquo;</span>
+            </li>
+        @else
+            <li class="page-item">
+                <a class="page-link btn btn-outline-dark" href="{{ $articles->previousPageUrl() }}" rel="prev">&laquo;</a>
+            </li>
+        @endif
+
+        {{-- Pagination Elements --}}
+        @php
+            $currentPage = $articles->currentPage();
+            $lastPage = $articles->lastPage();
+            $pageRange = 5;  // Number of page links to show at once
+
+            // Calculate the range of pages to show (e.g., 1-5, 6-10)
+            $startPage = max(1, $currentPage - floor($pageRange / 2));
+            $endPage = min($lastPage, $currentPage + floor($pageRange / 2));
+
+            // Adjust the range if we're close to the start or end
+            if ($currentPage < floor($pageRange / 2)) {
+                $endPage = min($lastPage, $pageRange);
+            }
+
+            if ($currentPage > $lastPage - floor($pageRange / 2)) {
+                $startPage = max(1, $lastPage - $pageRange + 1);
+            }
+        @endphp
+
+        {{-- Loop to display page numbers dynamically --}}
+        @for ($i = $startPage; $i <= $endPage; $i++)
+            <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                <a class="page-link btn btn-outline-dark" href="{{ $articles->url($i) }}">{{ $i }}</a>
+            </li>
+        @endfor
+
+        {{-- Next Page Link --}}
+        @if ($articles->hasMorePages())
+            <li class="page-item">
+                <a class="page-link btn btn-outline-dark" href="{{ $articles->nextPageUrl() }}" rel="next">&raquo;</a>
+            </li>
+        @else
+            <li class="page-item disabled">
+                <span class="page-link btn btn-outline-dark">&raquo;</span>
+            </li>
+        @endif
+    </ul>
 </div>
 
 <style>
@@ -179,7 +220,7 @@
             font-size: 16px; /* Smaller font size for titles on mobile */
             -webkit-line-clamp: 3; /* Still 2 lines for titles */
         }
-        
+
         .description-text {
             -webkit-line-clamp: 2; /* Reduce to 2 lines on mobile */
             font-size: 12px; /* Slightly smaller text on mobile */
@@ -189,4 +230,3 @@
 </style>
 
 @endsection
-    

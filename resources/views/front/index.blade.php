@@ -2,65 +2,6 @@
 
 @section('content')
 
-<style>
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 5%;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(128, 128, 128, 0.7);
-        border-radius: 50%;
-        height: 40px;
-        width: 40px;
-        z-index: 10;
-    }
-
-    .carousel-control-prev {
-        left: -50px;
-    }
-
-    .carousel-control-next {
-        right: -50px;
-    }
-
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        filter: invert(1);
-        background-size: 100% 100%;
-    }
-
-    @media (max-width: 768px) {
-        .carousel-control-prev {
-            left: -30px;
-        }
-
-        .carousel-control-next {
-            right: -30px;
-        }
-        .card {
-            height: fit-content;
-        }
-    }
-
-    .card-hover-zoom {
-        transition: transform 0.5s ease, box-shadow 0.3s ease;
-        position: relative;
-        z-index: 1;
-        box-shadow: 0 3px 8px rgba(200, 200, 200, 0.3);
-    }
-
-    .card-hover-zoom:hover {
-        transform: scale(1.2);
-        z-index: 999;
-        box-shadow: 0 10px 30px rgba(150, 150, 150, 0.3);
-    }
-
-    .carousel-inner,
-    .carousel-item {
-        overflow: visible !important;
-    }
-</style>
-
 <section class="position-relative">
     <nav class="navbar navbar-expand-lg bg-transparent py-2 position-absolute top-0 start-0 w-100 z-3">
         <div class="container">
@@ -93,10 +34,16 @@
     </nav>
 
     <div class="position-relative vh-100 d-flex align-items-center overflow-hidden">
-        <video class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover z-1" autoplay muted loop playsinline>
-            <source src="{{ asset('assets/video/background.mp4') }}" type="video/mp4" />
-            Your browser does not support the video tag.
-        </video>
+        <video
+        class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover z-1"
+        autoplay muted loop playsinline
+        disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback"
+        style="pointer-events: none;"
+    >
+        <source src="{{ asset('assets/video/background.mp4') }}" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+ 
         <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50 z-2"></div>
         <div class="container position-relative text-white z-2">
             <div class="row justify-content-center">
@@ -116,7 +63,7 @@
 <!-- Latest Articles -->
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold mb-0">Artikel Terbaru</h3>
+        <h3 class="fw-bold mb-0 article-text">Artikel Terbaru</h3>
         <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">Lihat semuanya</a>
     </div>
     <div id="latestArticlesCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -132,8 +79,8 @@
                                             <img src="{{ asset('storage/' . $article->thumbnail) }}" class="img-fluid object-fit-cover w-100 h-100" alt="{{ $article->title }}">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center align-items-start px-3">
-                                            <h5 class="fs-5 fw-semibold">{{ Str::limit($article->title, 50) }}</h5>
-                                            <p class="opacity-75 fs-7 clamp-text">{{ Str::limit($article->description, 70) }}</p>
+                                            <h5 class="fs-5 fw-semibold article-text">{{ Str::limit($article->title, 50) }}</h5>
+                                            <p class="opacity-75 fs-7 clamp-text article-text">{{ Str::limit($article->description, 70) }}</p>
                                         </div>
                                     </div>
                                 </a>
@@ -155,7 +102,7 @@
 <!-- Popular Articles -->
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold mb-0">Artikel Populer</h3>
+        <h3 class="fw-bold mb-0 article-text">Artikel Populer</h3>
         <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">Lihat semuanya</a>
     </div>
     <div id="popularArticlesCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -171,8 +118,8 @@
                                             <img src="{{ asset('storage/' . $article->thumbnail) }}" class="img-fluid object-fit-cover w-100 h-100" alt="{{ $article->title }}">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center align-items-start px-3">
-                                            <h5 class="fs-5 fw-semibold">{{ Str::limit($article->title, 50) }}</h5>
-                                            <p class="opacity-75 fs-7 clamp-text">{{ Str::limit($article->description, 70) }}</p>
+                                            <h5 class="fs-5 fw-semibold article-text">{{ Str::limit($article->title, 50) }}</h5>
+                                            <p class="opacity-75 fs-7 clamp-text article-text">{{ Str::limit($article->description, 70) }}</p>
                                         </div>
                                     </div>
                                 </a>

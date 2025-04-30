@@ -1,4 +1,4 @@
-<footer class="bg-dark text-white pt-5 pb-4 mt-5 border-top border-secondary">
+<footer class="text-white pt-5 pb-4 mt-5 border-top border-secondary" style="background-color: #0C2C5A;">
     <div class="container">
       <div class="row gy-4 align-items-start">
 
@@ -13,7 +13,7 @@
         <!-- Links -->
         <div class="col-md-4 text-center">
           <h5 class="fw-bold mb-3">Navigation</h5>
-          <ul class="list-unstyled d-flex  flex-column gap-2 align-items-center ">
+          <ul class="list-unstyled d-flex flex-column gap-2 align-items-center">
             <li><a href="{{ route('front.index') }}" class="text-white text-decoration-none hover-link">Home</a></li>
             <li><a href="#" class="text-white text-decoration-none hover-link">About Us</a></li>
             <li><a href="{{ route('front.articles') }}" class="text-white text-decoration-none hover-link">Articles</a></li>
@@ -38,8 +38,7 @@
               <i class="bi bi-instagram"></i>
             </a>
             <a href="#" class="btn btn-outline-light btn-sm rounded-circle border-0 shadow-sm" title="Twitter">
-                <i class="bi bi-twitter"></i>
-
+              <i class="bi bi-twitter"></i>
             </a>
           </div>
         </div>

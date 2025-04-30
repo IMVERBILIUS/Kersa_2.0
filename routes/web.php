@@ -8,6 +8,17 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Models\Article;
+use App\Http\Controllers\GalleryController;
+
+
+
+
+
+Route::get('/storage-link', function () {
+    $targetFolder = base_path() . '/storage/app/public';
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    symlink($targetFolder, $linkFolder);
+});
 
 // ===== Front Routes (Public) =====
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
@@ -51,6 +62,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Admin article detail view
     Route::get('/admin/articles/show/{id}', [ArticleController::class, 'show'])->name('admin.articles.show');
+    Route::get('/admin/galleries/manage', [GalleryController::class, 'index'])->name('admin.galleries.manage');
+    Route::get('/admin/galleries/create', [GalleryController::class, 'create'])->name('admin.galleries.create');
+    Route::post('/admin/galleries/store', [GalleryController::class, 'store'])->name('admin.galleries.store');
+    Route::get('/admin/galleries/edit/{id}', [GalleryController::class, 'edit'])->name('admin.galleries.edit');
+    Route::put('/admin/galleries/update/{id}', [GalleryController::class, 'update'])->name('admin.galleries.update');
+    Route::delete('/admin/galleries/delete/{id}', [GalleryController::class, 'destroy'])->name('admin.galleries.delete');
+
+    // Admin gallery detail view
+    Route::get('/admin/galleries/show/{id}', [GalleryController::class, 'show'])->name('admin.galleries.show');
 });
 
 // ===== Author Routes =====

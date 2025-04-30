@@ -11,21 +11,21 @@
         </div>
         <!-- Header Section with Subtle Gradient Background -->
         <div class="text-center mb-5 p-4 rounded-4">
-            <h1 class="fw-bold mb-3 text-dark" >Get in Touch</h1>
-            <p class="text-muted w-75 mx-auto">We'd love to hear from you. Whether you have a question, feedback, or want to collaborate, our team is ready to assist you.</p>
+            <h1 class="fw-bold mb-3 article-text" >Get in Touch</h1>
+            <p class="text-muted w-75 mx-auto article-text">We'd love to hear from you. Whether you have a question, feedback, or want to collaborate, our team is ready to assist you.</p>
         </div>
 
         <div class="row g-4">
             <!-- Contact Form with Soft Shadow -->
             <div class="col-lg-7 mb-4 mb-lg-0">
                 <div class="p-4 p-lg-5 rounded-4 h-100" style="background-color: #ffffff; box-shadow: 0 10px 30px rgba(108, 99, 255, 0.08);">
-                    <h4 class="fw-semibold mb-4 text-dark">Send us a message</h4>
+                    <h4 class="fw-semibold mb-4 article-text">Send us a message</h4>
                     <form>
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <div class="form-floating mb-1">
                                     <input type="text" class="form-control border-0" style="background-color: #f4f4f4;" id="nameInput" placeholder="Your name" required>
-                                    <label for="nameInput" class="text-muted">Name</label>
+                                    <label for="nameInput" class="text-muted article-text">Name</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -63,7 +63,7 @@
             <div class="col-lg-5">
                 <!-- Office Locations -->
                 <div class="p-4 p-lg-4 rounded-4 mb-4" style="background-color: #ffffff; box-shadow: 0 10px 30px rgba(108, 99, 255, 0.08);">
-                    <h4 class="fw-semibold mb-4 text-dark" >Our Locations</h4>
+                    <h4 class="fw-semibold mb-4 article-text" >Our Locations</h4>
 
                     <div class="d-flex mb-4 align-items-start">
                         <div class="me-3">
@@ -113,7 +113,7 @@
 
                 <!-- Social Media Connections -->
                 <div class="p-4 p-lg-4 rounded-4" style="background-color: #ffffff; box-shadow: 0 10px 30px rgba(108, 99, 255, 0.08);">
-                    <h4 class="fw-semibold mb-4" >Connect With Us</h4>
+                    <h4 class="fw-semibold mb-4 article-text" >Connect With Us</h4>
                     <div class="d-flex flex-column gap-3">
                         <a href="#" class="d-flex align-items-center text-decoration-none p-3 rounded-3" style="transition: all 0.3s ease; ">
                             <div class="me-3">
