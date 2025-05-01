@@ -289,8 +289,11 @@
                     <a href="{{ route('admin.galleries.manage') }}" class="{{ request()->routeIs('admin.galleries.manage') ? 'active' : '' }}">
                         <i class="fas fa-image"></i> Gallery
                     </a>
-
+                    <a href="{{ route('galleries.approval') }}" class="{{ request()->routeIs('galleries.approval') ? 'active' : '' }}">
+                        <i class="fas fa-clipboard-check"></i> Approval Galeri
+                    </a>
                 </div>
+
 
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf

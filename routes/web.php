@@ -68,6 +68,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/galleries/edit/{id}', [GalleryController::class, 'edit'])->name('admin.galleries.edit');
     Route::put('/admin/galleries/update/{id}', [GalleryController::class, 'update'])->name('admin.galleries.update');
     Route::delete('/admin/galleries/delete/{id}', [GalleryController::class, 'destroy'])->name('admin.galleries.delete');
+    Route::get('/admin/galleries/approval', [GalleryController::class, 'approval'])->name('galleries.approval');
+    Route::put('/admin/galleries/{id}/status', [GalleryController::class, 'updateStatus'])->name('galleries.updateStatus');
+
+
 
     // Admin gallery detail view
     Route::get('/admin/galleries/show/{id}', [GalleryController::class, 'show'])->name('admin.galleries.show');

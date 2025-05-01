@@ -204,4 +204,44 @@ class GalleryController extends Controller
 
         return view('galleries.show', compact('gallery'));
     }
+
+
+    public function approval(Request $request)
+    {
+        // Get the sorting option from the query string, default to 'latest'
+        $sort = $request->query('sort', 'latest');
+
+        // Get draft galleries
+        $draftGalleries = Gallery::where('status', 'Draft');
+
+        // Apply sorting
+        if ($sort === 'newest') {
+            $draftGalleries->orderBy('created_at', 'desc');
+        } else {
+            $draftGalleries->orderBy('created_at', 'asc');
+        }
+
+        // Paginate the results (6 galleries per page)
+        $draftGalleries = $draftGalleries->paginate(6)->withQueryString();
+
+        // Return the view with the paginated galleries
+        return view('galleries.approval', compact('draftGalleries'));
+    }
+
+    public function updateStatus($id)
+{
+    $gallery = Gallery::findOrFail($id);
+
+    // Ubah status menjadi Published jika saat ini Draft
+    if ($gallery->status === 'Draft') {
+        $gallery->status = 'Published';
+        $gallery->save();
+    }
+
+    return redirect()->back()->with('success', 'Gallery has been published successfully.');
+}
+
+
+
+
 }
