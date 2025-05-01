@@ -7,6 +7,7 @@ use App\Models\GalleryImage;
 use App\Models\GallerySubtitle;
 use App\Models\GalleryContent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -50,7 +51,6 @@ class GalleryController extends Controller
             'thumbnail' => 'nullable|image|max:2048',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|max:2048',
-
             'contents' => 'required|array',
             'contents.*.subtitle' => 'required|string|max:255',
             'contents.*.paragraphs' => 'required|array',
@@ -101,8 +101,6 @@ class GalleryController extends Controller
         return redirect()->route('admin.galleries.manage')->with('success', 'Gallery created successfully!');
     }
 
-
-
     public function edit($id)
     {
         $gallery = Gallery::with([
@@ -114,6 +112,7 @@ class GalleryController extends Controller
 
         return view('galleries.edit', compact('gallery'));
     }
+
     public function update(Request $request, $id)
     {
         $gallery = Gallery::findOrFail($id);
@@ -128,16 +127,68 @@ class GalleryController extends Controller
             'thumbnail' => 'nullable|image|max:2048',
             'status' => 'required|in:Draft,Published',
             'description' => 'nullable|string',
+            'update_images.*' => 'nullable|image|max:2048',
+            'gallery_images.*' => 'nullable|image|max:2048',
+            'contents' => 'nullable|array',
+            'contents.*.subtitle' => 'required|string|max:255',
+            'contents.*.paragraphs' => 'required|array',
+            'contents.*.paragraphs.*.content' => 'required|string',
         ]);
 
+        // Update thumbnail
         if ($request->hasFile('thumbnail')) {
+            if ($gallery->thumbnail) {
+                Storage::disk('public')->delete($gallery->thumbnail);
+            }
             $validated['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
         $gallery->update($validated);
 
+        // ✅ 1. Update existing images
+        if ($request->hasFile('update_images')) {
+            foreach ($request->file('update_images') as $imageId => $file) {
+                $imageModel = GalleryImage::find($imageId);
+                if ($imageModel && $file->isValid()) {
+                    Storage::disk('public')->delete($imageModel->image);
+                    $path = $file->store('gallery_images', 'public');
+                    $imageModel->update(['image' => $path]);
+                }
+            }
+        }
+
+        // ✅ 2. Tambah gambar baru
+        if ($request->hasFile('gallery_images')) {
+            foreach ($request->file('gallery_images') as $image) {
+                GalleryImage::create([
+                    'gallery_id' => $gallery->id,
+                    'image' => $image->store('gallery_images', 'public'),
+                ]);
+            }
+        }
+
+        // ✅ 3. Tambah subtitle & paragraph baru
+        if ($request->has('contents')) {
+            foreach ($request->contents as $subIndex => $subtitleData) {
+                $subtitle = GallerySubtitle::create([
+                    'gallery_id' => $gallery->id,
+                    'order_number' => $subIndex + 1,
+                    'subtitle' => $subtitleData['subtitle'],
+                ]);
+
+                foreach ($subtitleData['paragraphs'] as $paraIndex => $paragraph) {
+                    GalleryContent::create([
+                        'gallery_subtitle_id' => $subtitle->id,
+                        'order_number' => $paraIndex + 1,
+                        'content' => $paragraph['content'],
+                    ]);
+                }
+            }
+        }
+
         return redirect()->route('admin.galleries.manage')->with('success', 'Gallery updated successfully!');
     }
+
 
     public function destroy($id)
     {
