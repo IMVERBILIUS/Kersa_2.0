@@ -44,19 +44,18 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        // Validate inputs
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'status' => 'required|in:Draft,Published',
-            'contents' => 'required|array',
-            'contents.*.subtitle' => 'required|string|max:255',
-            'contents.*.paragraphs' => 'required|array',
-            'contents.*.paragraphs.*.content' => 'required|string',
+            'subheadings' => 'required|array',
+            'subheadings.*.title' => 'required|string|max:255',
+            'subheadings.*.paragraphs' => 'required|array',
+            'subheadings.*.paragraphs.*.content' => 'required|string',
+            'author' => 'required|string|max:255',
         ]);
 
-        // Handle Thumbnail
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail')) {
             $image = $request->file('thumbnail');
@@ -73,48 +72,32 @@ class ArticleController extends Controller
             $thumbnailPath = 'thumbnails/' . $imageName;
         }
 
-        // Save Gallery
-        $gallery = new Gallery();
-        $gallery->title = $request->title;
-        $gallery->description = $request->description;
-        $gallery->thumbnail = $thumbnailPath;
-        $gallery->status = $request->status;
-        $gallery->user_id = auth()->id();  // Assuming you're saving the user's ID
-        $gallery->save();
+        $article = new Article();
+        $article->title = $request->title;
+        $article->description = $request->description;
+        $article->thumbnail = $thumbnailPath;
+        $article->status = $request->status;
+        $article->user_id = auth()->id();
+        $article->author = $request->author;
+        $article->save();
 
-        // Save Gallery Contents and Subtitles
-        foreach ($request->contents as $contentIndex => $content) {
-            // Save Gallery Subtitle
-            $savedSubtitle = new GallerySubtitle();
-            $savedSubtitle->gallery_id = $gallery->id;
-            $savedSubtitle->subtitle = $content['subtitle'];
-            $savedSubtitle->save();
+        foreach ($request->subheadings as $subIndex => $subheading) {
+            $savedSub = new Subheading();
+            $savedSub->article_id = $article->id;
+            $savedSub->title = $subheading['title'];
+            $savedSub->order_number = $subIndex + 1;
+            $savedSub->save();
 
-            // Save Paragraphs for this Subtitle
-            foreach ($content['paragraphs'] as $paragraphIndex => $paragraph) {
-                $newParagraph = new GalleryContent();
-                $newParagraph->gallery_id = $gallery->id;
-                $newParagraph->content = $paragraph['content'];  // Assuming "content" is required
-                $newParagraph->created_at = now();
-                $newParagraph->updated_at = now();
+            foreach ($subheading['paragraphs'] as $paraIndex => $paragraph) {
+                $newParagraph = new Paragraph();
+                $newParagraph->subheading_id = $savedSub->id;
+                $newParagraph->content = $paragraph['content'];
+                $newParagraph->order_number = $paraIndex + 1;
                 $newParagraph->save();
             }
         }
 
-        // Save Gallery Images (as per original code logic)
-        if ($request->hasFile('gallery_images')) {
-            foreach ($request->file('gallery_images') as $image) {
-                $imageName = time() . '_' . $image->getClientOriginalName();
-                $image->storeAs('gallery_images', $imageName, 'public');
-
-                $galleryImage = new GalleryImage();
-                $galleryImage->gallery_id = $gallery->id;
-                $galleryImage->image = 'gallery_images/' . $imageName;
-                $galleryImage->save();
-            }
-        }
-
-        return redirect()->route('admin.galleries.manage')->with('success', 'Gallery created successfully.');
+        return redirect()->route('admin.articles.manage')->with('success', 'Article created with subheadings and paragraphs.');
     }
 
 
