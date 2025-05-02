@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Facades\Agent;
 use Illuminate\Support\Facades\Crypt;
@@ -21,7 +22,9 @@ class FrontController extends Controller
         // Tentukan ukuran chunk berdasarkan ukuran layar (mobile vs desktop)
         $chunk_size = (request()->header('User-Agent') && preg_match('/Mobile|Android|iPhone/', request()->header('User-Agent'))) ? 1 : 3;
 
-        return view('front.index', compact('latest_articles', 'populer_articles', 'chunk_size'));
+        $galleries = Gallery::all();
+
+        return view('front.index', compact('latest_articles', "galleries",'populer_articles', 'chunk_size'));
     }
 
     public function articles(Request $request)

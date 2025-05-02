@@ -142,4 +142,36 @@
     <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">Lihat semuanya</a>
 </div>
 
+
+
+{{-- Galleries --}}
+<div class="container py-5">
+     <div class="carousel-container">
+      <h2 class="carousel-title">Galeri</h2>
+      <p class="carousel-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, corporis ratione. Aperiam recusandae quidem maiores, aut similique beatae quas et soluta assumenda iusto, accusantium facilis cum totam in accusamus adipisci?</p>
+      <div class="carousel">
+        <button class="nav-button left">&#10094;</button>
+        <div class="carousel-images">
+
+            @foreach ($galleries as $gallery)
+            <a href="" class="image-item">
+              <img src="{{ asset(path: 'storage/' . $gallery->thumbnail) }}" alt="{{ $gallery->title }}" />
+              <h1>{{ Str::limit($gallery->title, 30)     }}</h1>
+            </a>
+            @endforeach
+        
+        </div>
+        <button class="nav-button right">&#10095;</button>
+      </div>
+    </div>
+</div>
+
+
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/carousel_gallery.css') }}">
+@endpush
+@push('scripts')
+    <script src="{{ asset('js/carousel_gallery.js') }}"></script>
+@endpush
