@@ -154,7 +154,7 @@
         <div class="carousel-images">
 
             @foreach ($galleries as $gallery)
-            <a href="" class="image-item">
+            <a href="{{ route('front.galleries.show', Crypt::encryptString($gallery->id)) }}" class="image-item">
               <img src="{{ asset(path: 'storage/' . $gallery->thumbnail) }}" alt="{{ $gallery->title }}" />
               <h1>{{ Str::limit($gallery->title, 30)     }}</h1>
             </a>

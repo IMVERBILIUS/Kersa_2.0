@@ -77,4 +77,16 @@ class FrontController extends Controller
 
         return view('front.article_show', compact('article'));
     }
+    public function gallery_show($id)
+    {
+        try {
+            $decryptedId = Crypt::decryptString($id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            abort(404); // kalau gagal dekripsi, tampilkan 404
+        }
+
+        $gallery = Gallery::findOrFail($decryptedId);
+
+        return view('front.gallery_show', compact('gallery'));
+    }
 }

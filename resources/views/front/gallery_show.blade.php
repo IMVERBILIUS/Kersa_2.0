@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('../layouts.master')
 
 @section('content')
 <div class="container py-4" style="font-family: 'Poppins', sans-serif; background-color: #F8F8FF;">
 
     <!-- Tombol Kembali -->
     <div class="d-flex justify-content-start mb-4 mt-4">
-        <a href="{{ route('admin.galleries.manage') }}" class="btn px-4 py-2 " 
+        <a href="{{ route('front.index') }}" class="btn px-4 py-2 " 
            style="background-color: #F0F5FF; color: #0C2C5A; font-weight: 600; border-radius: 8px; border: 1px solid #0c2c5a8d;">
             <i class="fas fa-arrow-left me-2"></i> Kembali
         </a>
