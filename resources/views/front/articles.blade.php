@@ -6,22 +6,24 @@
     <nav class="navbar navbar-expand-lg bg-white py-3 position-absolute top-0 start-0 w-100 z-3">
         <div class="container">
             <div class="navbar-brand d-flex flex-column align-items-start">
-                <h1 class="mb-0 fs-4 fw-semibold text-dark">KERSA</h1>
-                <p class="fs-6 mb-0 text-dark">By Ankara Cipta</p>
+                <h1 class="mb-0 fs-4 fw-semibold  text-custom ">KERSA</h1>
+                <p class="fs-6 mb-0 text-custom">By Ankara Cipta</p>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link fw-medium text-dark active" href="{{ route('front.index') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link fw-medium text-dark" href="{{ route('front.articles') }}">Articles</a></li>
-                    <li class="nav-item"><a class="nav-link fw-medium text-dark" href="{{ route('front.contact') }}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium text-custom active" href="{{ route('front.index') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium text-custom" href="{{ route('front.articles') }}">Articles</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium text-custom" href="{{ route('front.galleries') }}">Galleries</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium text-custom " href="{{ route('front.contact') }}">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 </section>
+
 
 <div class="container py-5 mt-5">
     <h2 class="fw-bold mb-4 text-center article-text">Semua Artikel</h2>
@@ -117,8 +119,16 @@
 </div>
 
 <style>
+    :root{
+        --text-color: #0C2C5A;
+    }
     a{
-        text-decoration: none
+        text-decoration: none;
+        color: var(--text-color);
+    }
+
+    .text-custom{
+        color: var(--text-color);
     }
     /* Custom Pagination Styles */
     .pagination {
@@ -167,25 +177,6 @@
         transform: scale(1.05);
         z-index: 2;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Customize navbar text color and size */
-    .navbar-nav .nav-link {
-        font-size: 1.2rem; /* Make text larger */
-        color: #343a40 !important; /* Dark gray text */
-    }
-
-    .navbar-nav .nav-link.active {
-        font-weight: 600; /* Bold active link */
-    }
-
-    .navbar-brand h1,
-    .navbar-brand p {
-        color: #343a40; /* Dark gray text for the brand */
-    }
-
-    .navbar-nav .nav-link:hover {
-        color: #6c757d; /* Slightly lighter gray on hover */
     }
 
     /* Customize Filter Dropdown */
