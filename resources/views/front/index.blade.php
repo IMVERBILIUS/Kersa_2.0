@@ -148,7 +148,7 @@
 <div class="container py-5">
      <div class="carousel-container">
       <h2 class="carousel-title">Galeri</h2>
-      <p class="carousel-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, corporis ratione. Aperiam recusandae quidem maiores, aut similique beatae quas et soluta assumenda iusto, accusantium facilis cum totam in accusamus adipisci?</p>
+      <p class="carousel-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, corporis ratione. Aperiam recusandae quidem maiores.</p>
       <div class="carousel">
         <button class="nav-button left">&#10094;</button>
         <div class="carousel-images">

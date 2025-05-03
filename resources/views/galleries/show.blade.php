@@ -57,17 +57,18 @@
 </div>
 
     </div>
-
     <!-- Galeri Gambar -->
-    @if ($gallery->images->count())
-    <div class="d-flex overflow-auto gap-3 mb-4">
-        @foreach ($gallery->images as $image)
-            <img src="{{ asset('storage/' . $image->image) }}" 
-                 class="rounded shadow-sm" 
-                 style="height: 90px; width: 140px; object-fit: cover;">
-        @endforeach
-    </div>
-    @endif
+        @if ($gallery->images->count())
+        <div class="d-flex overflow-auto flex-nowrap gap-3 mb-4 px-1">
+            @foreach ($gallery->images as $image)
+                <div class="flex-shrink-0" style="width: calc(100% / 7.6);">
+                    <img src="{{ asset('storage/' . $image->image) }}" 
+                        class="img-fluid rounded shadow-sm" 
+                        style="height: 140px; object-fit: cover; width: 100%;">
+                </div>
+            @endforeach
+        </div>
+        @endif
 
     <!-- Deskripsi -->
     <div class="card shadow-sm p-4 mb-4 border-0" style="border-radius: 12px;">
