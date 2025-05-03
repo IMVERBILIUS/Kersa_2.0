@@ -166,25 +166,75 @@ class GalleryController extends Controller
                 ]);
             }
         }
+        // ✅ 3. Hapus gambar yang ditandai untuk dihapus
+if ($request->has('delete_images')) {
+    foreach ($request->delete_images as $imageId) {
+        $image = GalleryImage::find($imageId);
+        if ($image) {
+            Storage::disk('public')->delete($image->image); // hapus file dari storage
+            $image->delete(); // hapus record dari database
+        }
+    }
+}
 
-        // ✅ 3. Tambah subtitle & paragraph baru
-        if ($request->has('contents')) {
-            foreach ($request->contents as $subIndex => $subtitleData) {
-                $subtitle = GallerySubtitle::create([
-                    'gallery_id' => $gallery->id,
-                    'order_number' => $subIndex + 1,
+
+// Update or create subtitles & paragraphs
+$existingSubtitleIds = [];
+if ($request->has('contents')) {
+    foreach ($request->contents as $subIndex => $subtitleData) {
+        if (isset($subtitleData['id'])) {
+            // Update existing subtitle
+            $subtitle = GallerySubtitle::find($subtitleData['id']);
+            if ($subtitle) {
+                $subtitle->update([
                     'subtitle' => $subtitleData['subtitle'],
+                    'order_number' => $subIndex + 1,
                 ]);
+            }
+        } else {
+            // Create new subtitle
+            $subtitle = GallerySubtitle::create([
+                'gallery_id' => $gallery->id,
+                'subtitle' => $subtitleData['subtitle'],
+                'order_number' => $subIndex + 1,
+            ]);
+        }
 
-                foreach ($subtitleData['paragraphs'] as $paraIndex => $paragraph) {
-                    GalleryContent::create([
-                        'gallery_subtitle_id' => $subtitle->id,
+        $existingSubtitleIds[] = $subtitle->id;
+
+        // Handle paragraphs
+        $existingContentIds = [];
+        foreach ($subtitleData['paragraphs'] as $paraIndex => $paragraphData) {
+            if (isset($paragraphData['id'])) {
+                $content = GalleryContent::find($paragraphData['id']);
+                if ($content) {
+                    $content->update([
+                        'content' => $paragraphData['content'],
                         'order_number' => $paraIndex + 1,
-                        'content' => $paragraph['content'],
                     ]);
                 }
+            } else {
+                $content = GalleryContent::create([
+                    'gallery_subtitle_id' => $subtitle->id,
+                    'content' => $paragraphData['content'],
+                    'order_number' => $paraIndex + 1,
+                ]);
             }
+            $existingContentIds[] = $content->id;
         }
+
+        // Hapus paragraph yang tidak ada di form
+        GalleryContent::where('gallery_subtitle_id', $subtitle->id)
+            ->whereNotIn('id', $existingContentIds)
+            ->delete();
+    }
+
+    // Hapus subtitle yang tidak ada di form
+    GallerySubtitle::where('gallery_id', $gallery->id)
+        ->whereNotIn('id', $existingSubtitleIds)
+        ->delete();
+}
+
 
         return redirect()->route('admin.galleries.manage')->with('success', 'Gallery updated successfully!');
     }
