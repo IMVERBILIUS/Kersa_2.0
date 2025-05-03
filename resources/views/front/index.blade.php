@@ -43,7 +43,7 @@
         <source src="{{ asset('assets/video/background.mp4') }}" type="video/mp4" />
         Your browser does not support the video tag.
     </video>
- 
+
         <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50 z-2"></div>
         <div class="container position-relative text-white z-2">
             <div class="row justify-content-center">
@@ -64,7 +64,7 @@
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold mb-0 article-text">Artikel Terbaru</h3>
-        <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">Lihat semuanya</a>
+        <a href="{{ route('front.articles') }}" class="btn btn-outline-dark lihat-semua-btn px-4">Lihat semuanya</a>
     </div>
     <div id="latestArticlesCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -103,7 +103,7 @@
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold mb-0 article-text">Artikel Populer</h3>
-        <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">Lihat semuanya</a>
+        <a href="{{ route('front.articles') }}" class="btn btn-outline-dark lihat-semua-btn px-4">Lihat semuanya</a>
     </div>
     <div id="popularArticlesCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -139,7 +139,7 @@
 </div>
 
 <div class="text-center mt-4">
-    <a href="{{ route('front.articles') }}" class="btn btn-outline-dark px-4">Lihat semuanya</a>
+    <a href="{{ route('front.articles') }}" class="btn btn-outline-dark lihat-semua-btn px-4">Lihat semuanya</a>
 </div>
 
 
@@ -159,11 +159,14 @@
               <h1>{{ Str::limit($gallery->title, 30)     }}</h1>
             </a>
             @endforeach
-        
+
         </div>
         <button class="nav-button right">&#10095;</button>
       </div>
     </div>
+</div>
+<div class="text-center mt-4">
+    <a href="{{ route('front.galleries') }}" class="btn btn-outline-dark lihat-semua-btn px-4">Lihat semuanya</a>
 </div>
 
 

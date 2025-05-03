@@ -44,7 +44,7 @@ class FrontController extends Controller
                 $articles = $articles->orderBy('views', 'desc')->paginate(6);
                 break;
             case 'author':
-                $articles = $articles->orderBy('author', 'asc')->paginate(6);   
+                $articles = $articles->orderBy('author', 'asc')->paginate(6);
                 break;
             case 'latest':
             default:
@@ -89,4 +89,26 @@ class FrontController extends Controller
 
         return view('front.gallery_show', compact('gallery'));
     }
+
+    public function galleries(Request $request)
+{
+    $query = Gallery::where('status', 'published');
+
+    // Optional: Sorting (jika nanti mau ditambahkan)
+    if ($request->has('sort_by')) {
+        switch ($request->input('sort_by')) {
+            case 'latest':
+                $query->orderBy('created_at', 'desc');
+                break;
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
+        }
+    }
+
+    $galleries = $query->paginate(6); // <= PENTING: paginate 6 item
+
+    return view('front.galleries', compact('galleries'));
+}
+
 }

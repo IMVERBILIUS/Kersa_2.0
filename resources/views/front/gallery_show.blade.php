@@ -1,11 +1,12 @@
 @extends('../layouts.master')
 
 @section('content')
-<div class="container py-4" style="font-family: 'Poppins', sans-serif; background-color: #F8F8FF;">
+
+<div class="container py-4" style="font-family: 'Poppins', sans-serif; background-color: ;">
 
     <!-- Tombol Kembali -->
     <div class="d-flex justify-content-start mb-4 mt-4">
-        <a href="{{ route('front.index') }}" class="btn px-4 py-2 " 
+        <a href="{{ route('front.index') }}" class="btn px-4 py-2 "
            style="background-color: #F0F5FF; color: #0C2C5A; font-weight: 600; border-radius: 8px; border: 1px solid #0c2c5a8d;">
             <i class="fas fa-arrow-left me-2"></i> Kembali
         </a>
@@ -18,9 +19,9 @@
     <div class="row mb-4">
         <div class="col-md-8">
             @if($gallery->thumbnail)
-                <img src="{{ asset('storage/' . $gallery->thumbnail) }}" 
-                     class="img-fluid rounded shadow-sm" 
-                     style="width: 100%; height: 400px; object-fit: cover;" 
+                <img src="{{ asset('storage/' . $gallery->thumbnail) }}"
+                     class="img-fluid rounded shadow-sm"
+                     style="width: 100%; height: 400px; object-fit: cover;"
                      alt="Thumbnail">
             @endif
         </div>
@@ -57,33 +58,44 @@
 </div>
 
     </div>
-
     <!-- Galeri Gambar -->
-    @if ($gallery->images->count())
-    <div class="d-flex overflow-auto gap-3 mb-4">
-        @foreach ($gallery->images as $image)
-            <img src="{{ asset('storage/' . $image->image) }}" 
-                 class="rounded shadow-sm" 
-                 style="height: 90px; width: 140px; object-fit: cover;">
-        @endforeach
-    </div>
-    @endif
+        @if ($gallery->images->count())
+        <div class="d-flex overflow-auto flex-nowrap gap-3 mb-4 px-1 ">
+            @foreach ($gallery->images as $image)
+                <div class="flex-shrink-0" style="width: calc(100% / 7.6);">
+                    <img src="{{ asset('storage/' . $image->image) }}"
+                        class="img-fluid rounded shadow-sm"
+                        style="height: 140px; object-fit: cover; width: 100%;">
+                </div>
+            @endforeach
+        </div>
+        @endif
 
     <!-- Deskripsi -->
     <div class="card shadow-sm p-4 mb-4 border-0" style="border-radius: 12px;">
         <p class="text-justify mb-0" style="line-height: 1.8; color: #0C2C5A;">{{ $gallery->description }}</p>
     </div>
 
-    <!-- Konten Tambahan -->
-    @foreach ($gallery->subtitles->sortBy('order_number') as $subtitle)
-        <div class="card shadow-sm p-4 mb-4 border-0" style="border-radius: 12px;">
-            <h5 class="fw-bold" style="color: #0C2C5A;">{{ $subtitle->order_number }}. {{ $subtitle->subtitle }}</h5>
-            @foreach ($subtitle->contents->sortBy('order_number') as $content)
-                <p class="text-justify mb-0" style="line-height: 1.8; color: #0C2C5A    ;">{{ $content->content }}</p>
-            @endforeach
-        </div>
-    @endforeach
+<!-- Konten Tambahan -->
+@if ($gallery->subtitles->count())
+    <div class="article-content">
+        @foreach ($gallery->subtitles->sortBy('order_number') as $subtitle)
+            <div class="subheading-section mb-4">
+                <h3 class="fw-bold mb-3 article-text" style="color: #3A4A5C; padding-bottom: 10px; border-bottom: 2px solid #F0F5FF;">
+                    {{ $subtitle->order_number }}. {{ $subtitle->subtitle }}
+                </h3>
+                @foreach ($subtitle->contents->sortBy('order_number') as $content)
+                    <div class="paragraph mb-4">
+                        <p style="line-height: 1.8; color: #5F738C;">{{ $content->content }}</p>
+                    </div>
+                @endforeach
+            </div>
+        @endforeach
+    </div>
+@endif
 
-  
+
+
 </div>
 @endsection
+

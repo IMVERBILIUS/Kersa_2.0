@@ -27,7 +27,10 @@ Route::get('/articles/{id}', [FrontController::class, 'show'])->name('front.arti
 Route::get('/contact', [FrontController::class, 'contact'])->name('front.contact');
 
 // ===== Gallery Routes =====
+Route::get('/galleries', [FrontController::class, 'galleries'])->name('front.galleries');
+
 Route::get('/galleries/{id}', [FrontController::class, 'gallery_show'])->name('front.galleries.show');
+
 
 // ===== Auth Routes =====
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
