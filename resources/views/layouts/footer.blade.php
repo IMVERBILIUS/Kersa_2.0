@@ -7,7 +7,7 @@
           <h4 class="fw-bold mb-2">KERSA</h4>
           <p class="mb-1 small">By Ankara Cipta</p>
           <p class="mb-1">&copy; 2025 Kersa by Ankara Cipta</p>
-          <p class="small text-muted">Sahabat solusi properti impian</p>
+          <p class="small mb-1" >Sahabat solusi properti impian</p>
         </div>
 
         <!-- Links -->
