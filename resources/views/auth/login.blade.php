@@ -112,6 +112,25 @@
             height: 24px;
             margin-right: 0.5rem;
         }
+        /* Button Kembali Style */
+.btn-back {
+
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-back i {
+    font-size: 1.2rem;
+}
 
         @media (max-width: 576px) {
             .card-body {
@@ -212,6 +231,11 @@
                             </div>
                         </div>
                     </form>
+                    <div class="text-center mt-3">
+                        <a href="{{ route('front.index') }}" class="btn btn-back w-100">
+                            <i class="fas fa-arrow-left me-2"></i> Kembali
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

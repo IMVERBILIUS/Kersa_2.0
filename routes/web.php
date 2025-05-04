@@ -53,8 +53,10 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         $articles = Article::all();
-        return view('dashboard.admin', compact('articles'));
+        $galleries = \App\Models\Gallery::all();
+        return view('dashboard.admin', compact('articles', 'galleries'));
     })->name('admin.dashboard');
+
 
     // Article management (Admin)
     Route::get('/admin/articles/manage', [ArticleController::class, 'index'])->name('admin.articles.manage');

@@ -87,23 +87,33 @@ class FrontController extends Controller
 
         $gallery = Gallery::findOrFail($decryptedId);
 
+        // Tambah jumlah views setiap kali galeri dibuka
+        $gallery->increment('views');
+
         return view('front.gallery_show', compact('gallery'));
     }
+
 
     public function galleries(Request $request)
 {
     $query = Gallery::where('status', 'published');
 
     // Optional: Sorting (jika nanti mau ditambahkan)
-    if ($request->has('sort_by')) {
-        switch ($request->input('sort_by')) {
-            case 'latest':
-                $query->orderBy('created_at', 'desc');
-                break;
-            case 'oldest':
-                $query->orderBy('created_at', 'asc');
-                break;
-        }
+    $sort = $request->input('sort', 'latest');
+
+    switch ($sort) {
+        case 'latest':
+            $query->orderBy('created_at', 'desc');
+            break;
+        case 'oldest':
+            $query->orderBy('created_at', 'asc');
+            break;
+        case 'popular':
+            $query->orderBy('views', 'desc'); // pastikan kolom 'views' ada di tabel
+            break;
+
+
+
     }
 
     $galleries = $query->paginate(6); // <= PENTING: paginate 6 item

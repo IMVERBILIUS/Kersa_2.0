@@ -16,6 +16,7 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
                     <li class="nav-item"><a class="nav-link fw-medium text-white active" href="{{ route('front.index') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link fw-medium text-white" href="{{ route('front.articles') }}">Articles</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium text-white" href="{{ route('front.galleries') }}">Galleries</a></li>
                     <li class="nav-item"><a class="nav-link fw-medium text-white" href="{{ route('front.contact') }}">Contact</a></li>
 
                     @guest
