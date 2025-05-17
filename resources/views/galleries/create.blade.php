@@ -79,15 +79,14 @@
                 <!-- Upload Gambar Galeri -->
                 <div class="mb-4">
                     <label class="form-label text-secondary fw-medium">Gallery Images</label>
-                    <div id="gallery-image-container">
-                        <div class="input-group mb-2">
-                            <input type="file" name="gallery_images[]" accept="image/*"class="form-control border-success rounded-start preview-gallery-image">
-                            <img src="#" class="img-thumbnail mt-2 d-none gallery-preview" style="max-height: 200px;">
-
-                            <button type="button" class="btn btn-danger remove-gallery-image">Remove</button>
+                    <div id="gallery-image-container" class="d-flex flex-wrap gap-3">
+                        <div class="gallery-image-group" style="width: 200px;">
+                            <input type="file" name="gallery_images[]" accept="image/*" class="form-control border-success rounded-3 preview-gallery-image" style="padding: .375rem .75rem;">
+                            <img src="#" class="img-thumbnail mt-2 d-none gallery-preview" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
+                            <button type="button" class="btn btn-danger btn-sm mt-2 w-100 remove-gallery-image">Remove</button>
                         </div>
                     </div>
-                    <button type="button" id="add-gallery-image" class="btn btn-primary btn-sm mt-2">
+                    <button type="button" id="add-gallery-image" class="btn btn-primary btn-sm mt-3">
                         <i class="fas fa-plus me-1"></i> Add More Images
                     </button>
                 </div>
@@ -125,6 +124,7 @@
 
 @push('scripts')
 <script>
+    // Subtitle & Paragraph management
     let subtitleIndex = 1;
 
     document.getElementById('add-subtitle-group').addEventListener('click', function () {
@@ -176,44 +176,67 @@
         }
     });
 
-    // Add/remove gallery images
+    // Gallery Images preview & management
+    function setupPreview(input) {
+        input.addEventListener('change', function () {
+            const file = input.files[0];
+            const preview = input.parentElement.querySelector('.gallery-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('d-none');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '#';
+                preview.classList.add('d-none');
+            }
+        });
+    }
+
+    // Setup preview for existing inputs
+    document.querySelectorAll('.preview-gallery-image').forEach(input => {
+        setupPreview(input);
+    });
+
+    // Add new gallery image input with preview and remove button
     document.getElementById('add-gallery-image').addEventListener('click', function () {
         const container = document.getElementById('gallery-image-container');
         const div = document.createElement('div');
-        div.classList.add('input-group', 'mb-2');
+        div.classList.add('gallery-image-group');
+        div.style.width = '200px';
         div.innerHTML = `
-            <input type="file" name="gallery_images[]" accept="image/*" class="form-control border-success rounded-start" required>
-            <button type="button" class="btn btn-danger remove-gallery-image">Remove</button>
+            <input type="file" name="gallery_images[]" accept="image/*" class="form-control border-success rounded-3 preview-gallery-image" style="padding: .375rem .75rem;">
+            <img src="#" class="img-thumbnail mt-2 d-none gallery-preview" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
+            <button type="button" class="btn btn-danger btn-sm mt-2 w-100 remove-gallery-image">Remove</button>
         `;
         container.appendChild(div);
+
+        // Setup preview for new input
+        setupPreview(div.querySelector('.preview-gallery-image'));
     });
 
+    // Remove gallery image group
     document.getElementById('gallery-image-container').addEventListener('click', function (e) {
         if (e.target.classList.contains('remove-gallery-image')) {
-            e.target.closest('.input-group').remove();
+            e.target.closest('.gallery-image-group').remove();
         }
     });
 
     // Thumbnail preview
-    document.getElementById('thumbnail').addEventListener('change', function (e) {
-        const parent = e.target.parentElement;
-        const overlay = parent.querySelector('div');
-        if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                let preview = parent.querySelector('img');
-                if (!preview) {
-                    preview = document.createElement('img');
-                    preview.classList.add('position-absolute', 'w-100', 'h-100');
-                    preview.style.objectFit = 'cover';
-                    parent.appendChild(preview);
-                }
-                preview.src = e.target.result;
-                overlay.style.display = 'none';
-            }
-            reader.readAsDataURL(e.target.files[0]);
-        }
-    });
+    document.getElementById
+('thumbnail').addEventListener('change', function () {
+const file = this.files[0];
+if (file) {
+const reader = new FileReader();
+reader.onload = function (e) {
+// Jika mau tampilkan preview thumbnail, bisa tambahkan elemen img dan update src di sini
+// Misal buat elemen img preview di samping input thumbnail
+}
+reader.readAsDataURL(file);
+}
+});
 </script>
 @endpush
 @endsection

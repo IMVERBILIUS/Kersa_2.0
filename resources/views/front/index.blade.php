@@ -53,7 +53,7 @@
                         <p class="lead mb-4 fw-light">
                             KERSA, lahir dari induk perusahaan <strong>CV. Ankara Cipta</strong> yang telah memiliki pengalaman dalam dunia perancangan dan konstruksi. Reksa memiliki cita-cita menjadi sahabat yang memberikan solusi membangun properti impian di Indonesia. Tim profesional dan berpengalaman senantiasa berkomitmen untuk menciptakan properti impian yang nyaman dan berkelanjutan.
                         </p>
-                        <p class="fs-5 fw-light">Sejarah baru akan dimulai, <em class="text-warning">soon April 2025</em>, sahabat solusi properti impian.</p>
+                        <p class="fs-5 fw-light">Sejarah baru akan dimulai, <em class="text-warning">menjadi solusi properti impian</em>.</p>
                     </div>
                 </div>
             </div>
@@ -139,7 +139,8 @@
     </div>
 </div>
 
-<div class="text-center mt-4">
+
+<div class="text-center mt-5 mt-md-4">
     <a href="{{ route('front.articles') }}" class="btn btn-outline-dark lihat-semua-btn px-4">Lihat semuanya</a>
 </div>
 
@@ -149,7 +150,7 @@
 <div class="container py-5">
      <div class="carousel-container">
       <h2 class="carousel-title">Galeri</h2>
-      <p class="carousel-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, corporis ratione. Aperiam recusandae quidem maiores.</p>
+      <p class="carousel-subtitle"></p>
       <div class="carousel">
         <button class="nav-button left">&#10094;</button>
         <div class="carousel-images">

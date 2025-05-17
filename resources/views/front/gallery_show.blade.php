@@ -19,10 +19,11 @@
     <div class="row mb-4">
         <div class="col-md-8">
             @if($gallery->thumbnail)
-                <img src="{{ asset('storage/' . $gallery->thumbnail) }}"
-                     class="img-fluid rounded shadow-sm"
-                     style="width: 100%; height: 400px; object-fit: cover;"
-                     alt="Thumbnail">
+        <img src="{{ asset('storage/' . $gallery->thumbnail) }}"
+            class="img-fluid rounded shadow-sm thumbnail-img"
+            style="width: 100%; height: 400px; object-fit: cover;"
+            alt="Thumbnail">
+
             @endif
         </div>
        <div class="col-md-4">
@@ -30,7 +31,7 @@
         <!-- Author Info -->
         <div class=" mb-4">
             <div class="fw-semibold" style="font-size: 1.1rem; color: #0C2C5A;">{{ $gallery->author }}</div>
-            <small class="text-muted">Author</small>
+            <small class="text-muted">Arsitek</small>
         </div>
         <hr>
 
@@ -58,18 +59,19 @@
 </div>
 
     </div>
-    <!-- Galeri Gambar -->
-        @if ($gallery->images->count())
-        <div class="d-flex overflow-auto flex-nowrap gap-3 mb-4 px-1 ">
-            @foreach ($gallery->images as $image)
-                <div class="flex-shrink-0" style="width: calc(100% / 7.6);">
-                    <img src="{{ asset('storage/' . $image->image) }}"
-                        class="img-fluid rounded shadow-sm"
-                        style="height: 140px; object-fit: cover; width: 100%;">
-                </div>
-            @endforeach
-        </div>
-        @endif
+<!-- Galeri Gambar -->
+@if ($gallery->images->count())
+    <div class="d-flex overflow-auto flex-nowrap gap-3 mb-4 px-1">
+        @foreach ($gallery->images as $image)
+            <div class="flex-shrink-0 gallery-item" style="width: calc(100% / 7.6);">
+                <img src="{{ asset('storage/' . $image->image) }}"
+                     class="img-fluid rounded shadow-sm gallery-img"
+                     style="height: 140px; object-fit: cover; width: 100%;">
+            </div>
+        @endforeach
+    </div>
+@endif
+
 
     <!-- Deskripsi -->
     <div class="card shadow-sm p-4 mb-4 border-0" style="border-radius: 12px;">
@@ -82,7 +84,7 @@
         @foreach ($gallery->subtitles->sortBy('order_number') as $subtitle)
             <div class="subheading-section mb-4">
                 <h3 class="fw-bold mb-3 article-text" style="color: #3A4A5C; padding-bottom: 10px; border-bottom: 2px solid #F0F5FF;">
-                    {{ $subtitle->order_number }}. {{ $subtitle->subtitle }}
+                     {{ $subtitle->subtitle }}
                 </h3>
                 @foreach ($subtitle->contents->sortBy('order_number') as $content)
                     <div class="paragraph mb-4">
@@ -97,5 +99,32 @@
 
 
 </div>
+
+<style>
+.gallery-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+    @media (max-width: 768px) {
+  .thumbnail-img {
+    height: auto !important;
+    max-height: 250px;
+    object-fit: contain !important;
+  }
+  .gallery-img {
+    height: auto;
+    max-height: 90px;
+    object-fit: contain; /* tampil utuh, tidak terpotong */
+  }
+
+  .gallery-item {
+    width: calc(100% / 3.2) !important;
+  }
+
+}
+
+</style>
 @endsection
 

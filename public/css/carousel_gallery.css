@@ -146,3 +146,22 @@
         color: white !important;
         border-color: #0C2C5A !important;
     }
+@media (max-width: 768px) {
+  .carousel {
+    height: 300px; /* lebih kecil dari 480px biar tidak gepeng */
+  }
+
+  .image-item {
+    height: 300px; /* sesuaikan dengan carousel */
+    width: 80%;    /* agar tidak terlalu lebar di layar kecil */
+    left: 10%;     /* untuk pusatkan elemen */
+  }
+
+  .image-item img {
+    height: calc(100% - 50px);
+  }
+  .image-item img {
+    object-fit: contain;
+  }
+
+}

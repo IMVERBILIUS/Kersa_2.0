@@ -11,7 +11,7 @@
 
     <div class="card shadow-sm border-0 mb-4 rounded-4">
         <div class="card-body p-4">
-            <form action="{{ route('admin.articles.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="article-form" action="{{ route('admin.articles.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="row mb-4">
@@ -88,7 +88,11 @@
                 </div>
 
                 <div class="d-flex justify-content-start">
-                    <button type="submit" class="btn btn-success px-4 py-2">Save Article</button>
+                    <button type="submit" id="save-button" class="btn btn-success px-4 py-2">
+                        <span class="spinner-border spinner-border-sm d-none me-2" role="status" aria-hidden="true"></span>
+                        <span class="btn-text">Save Article</span>
+                    </button>
+
                     <a href="{{ route('admin.articles.manage') }}" class="btn btn-outline-secondary ms-2 px-4 py-2">Cancel</a>
                 </div>
             </form>
@@ -127,91 +131,102 @@
 
 @push('scripts')
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.getElementById('subheading-container');
+    const addSubheadingBtn = document.getElementById('add-subheading');
+    const form = document.getElementById('article-form');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const spinner = submitButton.querySelector('.spinner-border');
+    const btnText = submitButton.querySelector('.btn-text');
     let subheadingIndex = 1;
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const container = document.getElementById('subheading-container');
-        const addSubheadingBtn = document.getElementById('add-subheading');
-
-        document.getElementById('thumbnail').addEventListener('change', function (e) {
-            if (e.target.files && e.target.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const parent = document.getElementById('thumbnail').parentElement;
-                    const overlay = parent.querySelector('div');
-
-                    let preview = parent.querySelector('img');
-                    if (!preview) {
-                        preview = document.createElement('img');
-                        preview.classList.add('position-absolute', 'w-100', 'h-100');
-                        preview.style.objectFit = 'cover';
-                        parent.appendChild(preview);
-                    }
-
-                    preview.src = e.target.result;
-                    overlay.style.display = 'none';
+    // Thumbnail preview
+    document.getElementById('thumbnail').addEventListener('change', function (e) {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const parent = document.getElementById('thumbnail').parentElement;
+                const overlay = parent.querySelector('div');
+                let preview = parent.querySelector('img');
+                if (!preview) {
+                    preview = document.createElement('img');
+                    preview.classList.add('position-absolute', 'w-100', 'h-100');
+                    preview.style.objectFit = 'cover';
+                    parent.appendChild(preview);
                 }
-                reader.readAsDataURL(e.target.files[0]);
+                preview.src = e.target.result;
+                overlay.style.display = 'none';
             }
-        });
-
-        addSubheadingBtn.addEventListener('click', function () {
-            const newSubheading = document.createElement('div');
-            newSubheading.classList.add('subheading-group', 'border-0', 'mb-4');
-            newSubheading.innerHTML = `
-                <div>
-                    <label class="form-label text-secondary fw-medium">Subheading</label>
-                    <input type="text" name="subheadings[${subheadingIndex}][title]" class="form-control border-success rounded-3 mb-3" required>
-
-                    <div class="paragraph-container mb-3">
-                        <label class="form-label text-secondary fw-medium">Paragraph</label>
-                        <textarea name="subheadings[${subheadingIndex}][paragraphs][0][content]" class="form-control border-success rounded-3 mb-3" rows="5" required></textarea>
-                    </div>
-
-                    <button type="button" class="btn btn-primary add-paragraph mb-2">
-                        <i class="fas fa-plus me-1"></i> Add Paragraph
-                    </button>
-
-                    <button type="button" class="btn btn-danger remove-subheading ms-2 mb-2">
-                        <i class="fas fa-trash me-1"></i> Remove Subheading
-                    </button>
-                </div>
-            `;
-            container.appendChild(newSubheading);
-            subheadingIndex++;
-        });
-
-        container.addEventListener('click', function (e) {
-            if (e.target.closest('.add-paragraph')) {
-                const subheadingGroup = e.target.closest('.subheading-group');
-                const paragraphContainer = subheadingGroup.querySelector('.paragraph-container');
-                const textareas = paragraphContainer.querySelectorAll('textarea');
-                const newParagraphIndex = textareas.length;
-
-                const nameSample = textareas[0].getAttribute('name');
-                const subIndexMatch = nameSample.match(/subheadings\[(\d+)\]/);
-                const subIndex = subIndexMatch ? subIndexMatch[1] : 0;
-
-                const newParagraphDiv = document.createElement('div');
-                newParagraphDiv.classList.add('mb-3');
-                newParagraphDiv.innerHTML = `
-                    <label class="form-label text-secondary fw-medium">Paragraph</label>
-                    <textarea name="subheadings[${subIndex}][paragraphs][${newParagraphIndex}][content]" class="form-control border-success rounded-3 mb-3" rows="5" required></textarea>
-                    <button type="button" class="btn btn-danger remove-paragraph btn-sm mb-2">Remove Paragraph</button>
-                `;
-
-                paragraphContainer.appendChild(newParagraphDiv);
-            }
-
-            if (e.target.classList.contains('remove-subheading')) {
-                e.target.closest('.subheading-group').remove();
-            }
-
-            if (e.target.classList.contains('remove-paragraph')) {
-                e.target.closest('div.mb-3').remove();
-            }
-        });
+            reader.readAsDataURL(e.target.files[0]);
+        }
     });
+
+    // Add subheading button
+    addSubheadingBtn.addEventListener('click', function () {
+        const newSubheading = document.createElement('div');
+        newSubheading.classList.add('subheading-group', 'border-0', 'mb-4');
+        newSubheading.innerHTML = `
+            <div>
+                <label class="form-label text-secondary fw-medium">Subheading</label>
+                <input type="text" name="subheadings[${subheadingIndex}][title]" class="form-control border-success rounded-3 mb-3" required>
+
+                <div class="paragraph-container mb-3">
+                    <label class="form-label text-secondary fw-medium">Paragraph</label>
+                    <textarea name="subheadings[${subheadingIndex}][paragraphs][0][content]" class="form-control border-success rounded-3 mb-3" rows="5" required></textarea>
+                </div>
+
+                <button type="button" class="btn btn-primary add-paragraph mb-2">
+                    <i class="fas fa-plus me-1"></i> Add Paragraph
+                </button>
+
+                <button type="button" class="btn btn-danger remove-subheading ms-2 mb-2">
+                    <i class="fas fa-trash me-1"></i> Remove Subheading
+                </button>
+            </div>
+        `;
+        container.appendChild(newSubheading);
+        subheadingIndex++;
+    });
+
+    // Event delegation for add paragraph and remove buttons
+    container.addEventListener('click', function (e) {
+        if (e.target.closest('.add-paragraph')) {
+            const subheadingGroup = e.target.closest('.subheading-group');
+            const paragraphContainer = subheadingGroup.querySelector('.paragraph-container');
+            const textareas = paragraphContainer.querySelectorAll('textarea');
+            const newParagraphIndex = textareas.length;
+
+            const nameSample = textareas[0].getAttribute('name');
+            const subIndexMatch = nameSample.match(/subheadings\[(\d+)\]/);
+            const subIndex = subIndexMatch ? subIndexMatch[1] : 0;
+
+            const newParagraphDiv = document.createElement('div');
+            newParagraphDiv.classList.add('mb-3');
+            newParagraphDiv.innerHTML = `
+                <label class="form-label text-secondary fw-medium">Paragraph</label>
+                <textarea name="subheadings[${subIndex}][paragraphs][${newParagraphIndex}][content]" class="form-control border-success rounded-3 mb-3" rows="5" required></textarea>
+                <button type="button" class="btn btn-danger remove-paragraph btn-sm mb-2">Remove Paragraph</button>
+            `;
+
+            paragraphContainer.appendChild(newParagraphDiv);
+        }
+
+        if (e.target.classList.contains('remove-subheading')) {
+            e.target.closest('.subheading-group').remove();
+        }
+
+        if (e.target.classList.contains('remove-paragraph')) {
+            e.target.closest('div.mb-3').remove();
+        }
+    });
+
+    // Disable submit button on form submit, show spinner
+    form.addEventListener('submit', function () {
+        submitButton.disabled = true;
+        spinner.classList.remove('d-none');
+        btnText.textContent = 'Submitting...';
+    });
+});
 </script>
 @endpush
 

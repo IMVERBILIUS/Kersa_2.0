@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Models\Article;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\AdminDashboardController;
+
 
 
 
@@ -20,16 +22,17 @@ Route::get('/storage-link', function () {
     symlink($targetFolder, $linkFolder);
 });
 
-// ===== Front Routes (Public) =====
-Route::get('/', [FrontController::class, 'index'])->name('front.index');
-Route::get('/articles', [FrontController::class, 'articles'])->name('front.articles');
-Route::get('/articles/{id}', [FrontController::class, 'show'])->name('front.articles.show');
-Route::get('/contact', [FrontController::class, 'contact'])->name('front.contact');
+// ===== Front Routes (Public with Visit Logging) =====
+Route::middleware('log.visit')->group(function () {
+    Route::get('/', [FrontController::class, 'index'])->name('front.index');
+    Route::get('/articles', [FrontController::class, 'articles'])->name('front.articles');
+    Route::get('/articles/{id}', [FrontController::class, 'show'])->name('front.articles.show');
+    Route::get('/contact', [FrontController::class, 'contact'])->name('front.contact');
 
-// ===== Gallery Routes =====
-Route::get('/galleries', [FrontController::class, 'galleries'])->name('front.galleries');
-
-Route::get('/galleries/{id}', [FrontController::class, 'gallery_show'])->name('front.galleries.show');
+    // ===== Gallery Routes =====
+    Route::get('/galleries', [FrontController::class, 'galleries'])->name('front.galleries');
+    Route::get('/galleries/{id}', [FrontController::class, 'gallery_show'])->name('front.galleries.show');
+});
 
 
 // ===== Auth Routes =====
@@ -51,11 +54,7 @@ Route::middleware(['auth'])->group(function () {
 
 // ===== Admin Routes =====
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        $articles = Article::all();
-        $galleries = \App\Models\Gallery::all();
-        return view('dashboard.admin', compact('articles', 'galleries'));
-    })->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
 
 
     // Article management (Admin)

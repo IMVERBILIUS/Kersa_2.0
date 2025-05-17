@@ -127,6 +127,6 @@
     object-fit: cover;
     height: 100%;
 }
- 
+
 </style>
 @endpush
